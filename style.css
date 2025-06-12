@@ -1,0 +1,132 @@
+Reset * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.top-image {
+  min-height: 2815vh;
+  background-image: url("img/نهائي1.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center top;
+  background-attachment: scroll;
+}
+
+.scroll-bg {
+  min-height: 4200vh;
+  background-image: url("img/نهائي\ 2.jpg");
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-attachment: scroll;
+}
+.p {
+  position: relative;
+}
+.gift {
+  width: 60px;
+  height: 60px;
+  z-index: 10;
+}
+.gift1 {
+  position: absolute;
+  top: 2431px;
+  left: 70px;
+}
+.gift2 {
+  position: absolute;
+  top: 4340px;
+  left: 70px;
+}
+.gift3 {
+  position: absolute;
+  top: 5320px;
+  left: 70px;
+}
+.gift4 {
+  position: absolute;
+  top: 7970px;
+  left: 35px;
+}
+.gift5 {
+  position: absolute;
+  top: 9320px;
+  left: 282px;
+}
+.gift6 {
+  position: absolute;
+  top: 10449px;
+  left: 81px;
+}
+.gift7 {
+  position: absolute;
+  top: 11933px;
+  left: 297px;
+}
+.gift8 {
+  position: absolute;
+  top: 13455px;
+  left: 118px;
+}
+
+.gift-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  max-width: 90%;
+  max-height: 90%;
+  display: none;
+}
+
+.gift-popup img {
+  width: 100%;
+  height: auto;
+}
+
+.gift-popup.active {
+  display: block;
+}
+.loop2 {
+  transform: translateY(13047px);
+}
+.loop3 {
+  transform: translateY(26094px);
+}
+@keyframes popup-zoom {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+.gift-popup img.animate {
+  animation: popup-zoom 2s ease-in-out forwards;
+}
+/* للهدية الأخيرة - أنيميشن أطول */
+/* .gift-popup img.animate-long {
+  animation: popup-zoom 90s ease-in-out forwards;
+} */
+
+@media (max-width: 600px) {
+  .top-image {
+    min-height: 812vh;
+  }
+}
