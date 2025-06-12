@@ -4,26 +4,26 @@ const popupImg = document.getElementById('popup-img');
 
 // أصوات الهدايا
 const sounds = {
-    gift1: new Audio('/audio/sheap.mp3'),
-    gift2: new Audio('/audio/bee audio.mp3'),
+    gift1: new Audio('audio/sheap.mp3'),
+    gift2: new Audio('audio/bee audio.mp3'),
     gift3: new Audio('audio/chicken.mp3'),
-    gift4: new Audio('/audio/donkey.mp3'),
-    gift5: new Audio('/audio/dog.mp3'),
-    gift6: new Audio('/audio/model 1.mp3'),
-    gift7: new Audio('/audio/model2.mp3'),
-    gift8: new Audio('/audio/error-call-to-attention-129258.mp3'),
+    gift4: new Audio('audio/donkey.mp3'),
+    gift5: new Audio('audio/dog.mp3'),
+    gift6: new Audio('audio/model 1.mp3'),
+    gift7: new Audio('audio/model2.mp3'),
+    gift8: new Audio('audio/error-call-to-attention-129258.mp3'),
 };
 
 // صور الهدايا
 const images = {
-    gift1: '/img/cherry-removebg-preview.png',
+    gift1: 'img/cherry-removebg-preview.png',
     gift2: 'treats/images.jpg',
-    gift3: '/treats/images.png',
-    gift4: '/treats/img.png',
-    gift5: '/treats/istockphoto-2155253329-612x612.jpg',
-    gift6: '/treats/emojis.com minecraft-￼.png',
-    gift7: '/treats/emojis.com minecraft-￼.png',
-    gift8: '/img2/error 1.jpg',
+    gift3: 'treats/images.png',
+    gift4: 'treats/img.png',
+    gift5: 'treats/istockphoto-2155253329-612x612.jpg',
+    gift6: 'treats/emojis.com minecraft-￼.png',
+    gift7: 'treats/emojis.com minecraft-￼.png',
+    gift8: 'img2/error 1.jpg',
 };
 
 let currentGift = null;
