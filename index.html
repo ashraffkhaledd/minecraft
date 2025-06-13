@@ -6,58 +6,862 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        Reset * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #fff;
+        }
+
+        .img1 {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .img2 {
+            width: 100%;
+            height: auto;
+            display: block;
+            background-color: #fff;
+        }
+
+        .li {
+            line-height: -20%;
+        }
+
+        div {
+            margin: -10px auto;
+        }
+
+        .gift-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            max-width: 90%;
+            max-height: 90%;
+            display: none;
+        }
+
+        .gift-popup img {
+            width: 100%;
+            height: auto;
+        }
+
+        .gift-popup.active {
+            display: block;
+        }
+
+        @keyframes popup-zoom {
+            0% {
+                transform: scale(0.2);
+                opacity: 0;
+            }
+
+            30% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            60% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.2);
+                opacity: 0;
+            }
+        }
+
+        .gift-popup img.animate {
+            animation: popup-zoom 2s ease-in-out forwards;
+        }
+
+        .gift {
+            position: absolute;
+            width: clamp(40px, 5vw, 60px);
+            height: clamp(40px, 5vw, 60px);
+            z-index: 10;
+            cursor: pointer;
+            animation: glow 2s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .gift:hover {
+            transform: scale(1.1);
+        }
+
+        .gift img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(255, 215, 0, 0.5),
+                    0 0 10px rgba(255, 215, 0, 0.3),
+                    0 0 15px rgba(255, 215, 0, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.8),
+                    0 0 20px rgba(255, 215, 0, 0.5),
+                    0 0 30px rgba(255, 215, 0, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(255, 215, 0, 0.5),
+                    0 0 10px rgba(255, 215, 0, 0.3),
+                    0 0 15px rgba(255, 215, 0, 0.1);
+            }
+        }
+
+        /* Different colors for different gifts */
+        .gift1 {
+            animation: glow1 2s ease-in-out infinite;
+        }
+
+        .gift2 {
+            animation: glow2 2s ease-in-out infinite;
+        }
+
+        .gift3 {
+            animation: glow3 2s ease-in-out infinite;
+        }
+
+        .gift4 {
+            animation: glow4 2s ease-in-out infinite;
+        }
+
+        .gift5 {
+            animation: glow5 2s ease-in-out infinite;
+        }
+
+        .gift6 {
+            animation: glow6 2s ease-in-out infinite;
+        }
+
+        .gift7 {
+            animation: glow7 2s ease-in-out infinite;
+        }
+
+        .gift8 {
+            animation: glow8 2s ease-in-out infinite;
+        }
+
+        .gift9 {
+            animation: glow9 2s ease-in-out infinite;
+        }
+
+        .gift10 {
+            animation: glow10 2s ease-in-out infinite;
+        }
+
+        .gift11 {
+            animation: glow11 2s ease-in-out infinite;
+        }
+
+        @keyframes glow1 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow2 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow3 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow4 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow5 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow6 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow7 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow8 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow9 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow10 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow11 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        /* Gift positions using percentages */
+        .gift1 {
+            top: 12.2%;
+            left: 18%;
+        }
+
+        .gift2 {
+            top: 22%;
+            left: 24%;
+        }
+
+        .gift3 {
+            top: 26.9%;
+            left: 20%;
+        }
+
+        .gift4 {
+            top: 40%;
+            left: 8%;
+        }
+
+        .gift5 {
+            top: 46.8%;
+            left: 69%;
+        }
+
+        .gift6 {
+            top: 52.6%;
+            left: 18%;
+        }
+
+        .gift7 {
+            top: 60.1%;
+            left: 68%;
+        }
+
+        .gift8 {
+            top: 67.8%;
+            left: 24%;
+        }
+
+        .gift9 {
+            top: 77.6%;
+            left: 15%;
+        }
+
+        .gift10 {
+            top: 87.4%;
+            left: 18%;
+        }
+
+        .gift11 {
+            top: 92.3%;
+            left: 18%;
+        }
+
+        /* Responsive adjustments for different screen sizes */
+        @media (min-width: 1200px) {
+            .gift {
+                width: clamp(50px, 4vw, 70px);
+                height: clamp(50px, 4vw, 70px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gift {
+                width: clamp(35px, 6vw, 50px);
+                height: clamp(35px, 6vw, 50px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gift {
+                width: clamp(30px, 8vw, 40px);
+                height: clamp(30px, 8vw, 40px);
+            }
+        }
+
+        /* Adjust gift positions for different screen sizes */
+        @media (min-width: 1600px) {
+            .gift1 {
+                top: 11.8%;
+                left: 20%;
+            }
+
+            .gift2 {
+                top: 21.1%;
+                left: 26%;
+            }
+
+            .gift3 {
+                top: 25.9%;
+                left: 30%;
+            }
+
+            .gift4 {
+                top: 38.67%;
+                left: 10%;
+            }
+
+            .gift5 {
+                top: 45%;
+                left: 71%;
+            }
+
+            .gift6 {
+                top: 50.7%;
+                left: 20%;
+            }
+
+            .gift7 {
+                top: 58%;
+                left: 70%;
+            }
+
+            .gift8 {
+                top: 65.5%;
+                left: 26%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gift1 {
+                top: 11.8%;
+                left: 16%;
+            }
+
+            .gift2 {
+                top: 21.1%;
+                left: 22%;
+            }
+
+            .gift3 {
+                top: 25.9%;
+                left: 26%;
+            }
+
+            .gift4 {
+                top: 38.67%;
+                left: 6%;
+            }
+
+            .gift5 {
+                top: 45%;
+                left: 67%;
+            }
+
+            .gift6 {
+                top: 50.7%;
+                left: 16%;
+            }
+
+            .gift7 {
+                top: 58%;
+                left: 66%;
+            }
+
+            .gift8 {
+                top: 65.5%;
+                left: 22%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gift1 {
+                top: 11.8%;
+                left: 14%;
+            }
+
+            .gift2 {
+                top: 21.1%;
+                left: 20%;
+            }
+
+            .gift3 {
+                top: 25.9%;
+                left: 24%;
+            }
+
+            .gift4 {
+                top: 38.67%;
+                left: 4%;
+            }
+
+            .gift5 {
+                top: 45%;
+                left: 65%;
+            }
+
+            .gift6 {
+                top: 50.7%;
+                left: 14%;
+            }
+
+            .gift7 {
+                top: 58%;
+                left: 64%;
+            }
+
+            .gift8 {
+                top: 65.5%;
+                left: 20%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .top-image {
+                min-height: 100vh;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .top-image {
+                min-height: 100vh;
+            }
+        }
+
+        .one {
+            position: relative;
+            width: 100%;
+        }
+
+        .two {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: visible;
+        }
+
+        .scroll-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .gift {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .gift img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Gift positions using percentages */
+        .gift1 {
+            top: 12.2%;
+            left: 18%;
+        }
+
+        .gift2 {
+            top: 22%;
+            left: 24%;
+        }
+
+        .gift3 {
+            top: 26.9%;
+            left: 20%;
+        }
+
+        .gift4 {
+            top: 40%;
+            left: 8%;
+        }
+
+        .gift5 {
+            top: 46.8%;
+            left: 69%;
+        }
+
+        .gift6 {
+            top: 52.6%;
+            left: 18%;
+        }
+
+        .gift7 {
+            top: 60.1%;
+            left: 68%;
+        }
+
+        .gift8 {
+            top: 67.8%;
+            left: 24%;
+        }
+
+        .gift9 {
+            top: 77.6%;
+            left: 15%;
+        }
+
+        .gift10 {
+            top: 87.4%;
+            left: 18%;
+        }
+
+        .gift11 {
+            top: 92.3%;
+            left: 18%;
+        }
+    </style>
 
 </head>
 
 <body>
-    <div class="top-image">
-        <div class="p">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift1">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift2">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift3">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift4">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift5">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift6">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift7">
-            <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift8">
-
-            <div class="loop2">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift1">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift2">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift3">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift4">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift5">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift6">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift7">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift8">
-
+    <div class="one">
+        <img src="img/full نهائي (1).jpg" class="img1" alt="">
+        <!-- Gifts will be added here dynamically -->
+    </div>
+    <div class="li">
+        <div class="two">
+            <div class="scroll-container" id="scrollContainer">
+                <!-- Images will be added here dynamically -->
             </div>
-            <div class="loop3">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift1">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift2">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift3">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift4">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift5">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift6">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift7">
-                <img src="img/gift-removebg-preview.png" alt="Gift" class="gift gift8">
-
-            </div>
-
         </div>
 
+        <div id="popup" class="gift-popup">
+            <img id="popup-img" src="" alt="Gift Content">
+        </div>
+
+        <script>
+            // Sound effects for gifts
+            const sounds = {
+                gift1: new Audio('audio/sheap.mp3'),
+                gift2: new Audio('audio/bee audio.mp3'),
+                gift3: new Audio('audio/chicken.mp3'),
+                gift4: new Audio('audio/donkey.mp3'),
+                gift5: new Audio('audio/dog.mp3'),
+                gift6: new Audio('audio/model 1.mp3'),
+                gift7: new Audio('audio/model2.mp3'),
+                gift8: new Audio('audio/error-call-to-attention-129258.mp3'),
+                gift9: new Audio('audio/sheap.mp3'),
+                gift10: new Audio('audio/bee audio.mp3'),
+                gift11: new Audio('audio/chicken.mp3'),
+            };
+
+            // Popup images for gifts
+            const images = {
+                gift1: 'img/cherry-removebg-preview.png',
+                gift2: 'treats/images-removebg-preview (1).png',
+                gift3: 'treats/images-removebg-preview.png',
+                gift4: 'treats/img-removebg-preview.png',
+                gift5: 'treats/istockphoto-2155253329-612x612-removebg-preview.png',
+                gift6: 'treats/emojis.com minecraft-dog.png',
+                gift7: 'treats/emojis.com minecraft-￼.png',
+                gift8: 'img2/error 1.jpg',
+                gift9: 'img/cherry-removebg-preview.png',
+                gift10: 'treats/images-removebg-preview (1).png',
+                gift11: 'treats/images-removebg-preview.png',
+            };
+
+            let currentGift = null;
+            const popup = document.getElementById('popup');
+            const popupImg = document.getElementById('popup-img');
+
+            // Gift positions (percentage from top and left)
+            const giftPositions = [
+                { class: 'gift4', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift5', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift6', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift7', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift8', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift9', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift10', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift11', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift1', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift2', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift3', src: 'img/gift-removebg-preview.png' }
+            ];
+
+            function handleGiftClick(event) {
+                const gift = event.currentTarget;
+                const giftClass = gift.className.split(' ')[1];
+
+                if (giftClass) {
+                    currentGift = giftClass;
+                    console.log('Clicked gift:', giftClass);
+
+                    // Play sound
+                    const sound = sounds[giftClass];
+                    if (sound) {
+                        console.log('Playing sound for:', giftClass);
+                        sound.currentTime = 0;
+                        sound.play().catch(error => console.error('Error playing sound:', error));
+                    }
+
+                    // Load popup image
+                    const popupImagePath = images[giftClass];
+                    if (popupImagePath) {
+                        console.log('Loading image:', popupImagePath);
+                        popupImg.src = popupImagePath;
+                    }
+
+                    // Control size
+                    if (giftClass === 'gift8') {
+                        popupImg.style.width = '70vw';
+                        popupImg.style.height = 'auto';
+                        // Show popup for gift8
+                        popup.classList.add('active');
+                        // Apply animation
+                        popupImg.classList.remove('animate', 'animate-long');
+                        void popupImg.offsetWidth; // Force reflow
+                        popupImg.classList.add('animate-long');
+                    } else {
+                        popupImg.style.width = '100%';
+                        popupImg.style.height = 'auto';
+                        // Show popup for other gifts
+                        popup.classList.add('active');
+                        // Apply animation
+                        popupImg.classList.remove('animate', 'animate-long');
+                        void popupImg.offsetWidth; // Force reflow
+                        popupImg.classList.add('animate');
+
+                        // Auto hide after 2 seconds for non-gift8
+                        setTimeout(() => {
+                            popup.classList.remove('active');
+                            popupImg.classList.remove('animate', 'animate-long');
+                            popupImg.src = '';
+                            currentGift = null;
+                        }, 2000);
+                    }
+                }
+            }
+
+            function createGift(gift, isLoopGift = false) {
+                const giftElement = document.createElement('div');
+                giftElement.className = `gift ${gift.class}`;
+
+                const giftImg = document.createElement('img');
+                giftImg.src = gift.src;
+                giftImg.alt = 'Gift';
+                giftElement.appendChild(giftImg);
+
+                // Add click event listener
+                giftElement.addEventListener('click', handleGiftClick);
+
+                // Add specific positions for loop gifts
+                if (isLoopGift) {
+                    switch (gift.class) {
+                        case 'gift4':
+                            giftElement.style.top = '3.2%';
+                            giftElement.style.left = '20%';
+                            break;
+                        case 'gift5':
+                            giftElement.style.top = '13.5%';
+                            giftElement.style.left = '66%';
+                            break;
+                        case 'gift6':
+                            giftElement.style.top = '22%';
+                            giftElement.style.left = '20%';
+                            break;
+                        case 'gift7':
+                            giftElement.style.top = '33.6%';
+                            giftElement.style.left = '65%';
+                            break;
+                        case 'gift8':
+                            giftElement.style.top = '45%';
+                            giftElement.style.left = '20%';
+                            break;
+                        case 'gift1':
+                            giftElement.style.top = '60%';
+                            giftElement.style.left = '15%';
+                            break;
+                        case 'gift2':
+                            giftElement.style.top = '75%';
+                            giftElement.style.left = '15%';
+                            break;
+                        case 'gift3':
+                            giftElement.style.top = '82.4%';
+                            giftElement.style.left = '25%';
+                            break;
+                    }
+                }
+
+                return giftElement;
+            }
+
+            function addGiftsToContainer(container, isLoopGift = false) {
+                giftPositions.forEach(gift => {
+                    container.appendChild(createGift(gift, isLoopGift));
+                });
+            }
+
+            // Add gifts to first image (not loop gifts)
+            const firstImageContainer = document.querySelector('.one');
+            addGiftsToContainer(firstImageContainer, false);
+
+            function createImageWithGifts() {
+                const imageWrapper = document.createElement('div');
+                imageWrapper.className = 'image-wrapper';
+
+                const img = document.createElement('img');
+                img.src = 'img/نهائي 2.jpg';
+                img.className = 'img2';
+                imageWrapper.appendChild(img);
+
+                // Add gifts to this image (loop gifts)
+                addGiftsToContainer(imageWrapper, true);
+
+                return imageWrapper;
+            }
+
+            // Add initial images
+            for (let i = 0; i < 2; i++) {
+                scrollContainer.appendChild(createImageWithGifts());
+            }
+
+            function checkAndAddImage() {
+                const scrollBottom = window.scrollY + window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                // If we're near the bottom, add another image
+                if (scrollBottom >= documentHeight - 100) {
+                    scrollContainer.appendChild(createImageWithGifts());
+                    imageCount++;
+                }
+            }
+
+            // Listen for scroll events
+            window.addEventListener('scroll', checkAndAddImage);
+
+            // Initial check
+            checkAndAddImage();
+
+            // Handle popup image click for gift8
+            popupImg.addEventListener('click', () => {
+                if (currentGift === 'gift8') {
+                    popup.classList.remove('active');
+                    popupImg.classList.remove('animate', 'animate-long');
+                    popupImg.src = '';
+                    currentGift = null;
+                }
+            });
+
+            // Add click event listener to popup background
+            popup.addEventListener('click', (event) => {
+                if (event.target === popup && currentGift === 'gift8') {
+                    popup.classList.remove('active');
+                    popupImg.classList.remove('animate', 'animate-long');
+                    popupImg.src = '';
+                    currentGift = null;
+                }
+            });
+
+            // Debug: Log all gift elements to verify they exist
+            console.log('All gift elements:', document.querySelectorAll('.gift'));
+        </script>
     </div>
-    <div class="scroll-bg">
-
-    </div>
-
-
-
-    <div id="popup" class="gift-popup">
-        <img id="popup-img" src="" alt="Gift Content">
-    </div>
-
-    <script src="js.js"></script>
 </body>
 
 </html>
