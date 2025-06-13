@@ -48,13 +48,15 @@
             transform: translate(-50%, -50%);
             z-index: 999;
             max-width: 90%;
-            max-height: 90%;
+            max-height: 90vh;
             display: none;
         }
 
         .gift-popup img {
             width: 100%;
             height: auto;
+            max-height: 80vh;
+            object-fit: contain;
         }
 
         .gift-popup.active {
@@ -729,14 +731,32 @@
 
                         // Auto hide after 2 seconds for non-gift8
                         setTimeout(() => {
-                            popup.classList.remove('active');
-                            popupImg.classList.remove('animate', 'animate-long');
-                            popupImg.src = '';
-                            currentGift = null;
+                            closePopup();
                         }, 2000);
                     }
                 }
             }
+
+            function closePopup() {
+                popup.classList.remove('active');
+                popupImg.classList.remove('animate', 'animate-long');
+                popupImg.src = '';
+                currentGift = null;
+            }
+
+            // Handle popup click to close
+            popup.addEventListener('click', (event) => {
+                if (currentGift === 'gift8') {
+                    closePopup();
+                }
+            });
+
+            // Remove the stopPropagation to allow clicks to reach the popup
+            popupImg.addEventListener('click', () => {
+                if (currentGift === 'gift8') {
+                    closePopup();
+                }
+            });
 
             function createGift(gift, isLoopGift = false) {
                 const giftElement = document.createElement('div');
@@ -837,26 +857,6 @@
 
             // Initial check
             checkAndAddImage();
-
-            // Handle popup image click for gift8
-            popupImg.addEventListener('click', () => {
-                if (currentGift === 'gift8') {
-                    popup.classList.remove('active');
-                    popupImg.classList.remove('animate', 'animate-long');
-                    popupImg.src = '';
-                    currentGift = null;
-                }
-            });
-
-            // Add click event listener to popup background
-            popup.addEventListener('click', (event) => {
-                if (event.target === popup && currentGift === 'gift8') {
-                    popup.classList.remove('active');
-                    popupImg.classList.remove('animate', 'animate-long');
-                    popupImg.src = '';
-                    currentGift = null;
-                }
-            });
 
             // Debug: Log all gift elements to verify they exist
             console.log('All gift elements:', document.querySelectorAll('.gift'));
