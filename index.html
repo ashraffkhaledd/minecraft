@@ -363,6 +363,42 @@
             left: 18%;
         }
 
+        .gift12 {
+            top: 93%;
+            left: 20%;
+            animation: glow12 2s ease-in-out infinite;
+        }
+
+        .gift13 {
+            top: 78.3%;
+            left: 18%;
+            animation: glow13 2s ease-in-out infinite;
+        }
+
+        @keyframes glow12 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
+        @keyframes glow13 {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+            }
+        }
+
         /* Responsive adjustments for different screen sizes */
         @media (min-width: 1200px) {
             .gift {
@@ -616,6 +652,16 @@
             top: 92.3%;
             left: 18%;
         }
+
+        .gift12 {
+            top: 93%;
+            left: 20%;
+        }
+
+        .gift13 {
+            top: 78.3%;
+            left: 18%;
+        }
     </style>
 
 </head>
@@ -650,6 +696,8 @@
                 gift9: new Audio('audio/sheap.mp3'),
                 gift10: new Audio('audio/bee audio.mp3'),
                 gift11: new Audio('audio/chicken.mp3'),
+                gift12: new Audio('audio/error.psd.mp3'),
+                gift13: new Audio('audio/error.psd.mp3'),
             };
 
             // Popup images for gifts
@@ -659,12 +707,14 @@
                 gift3: 'treats/images-removebg-preview.png',
                 gift4: 'treats/img-removebg-preview.png',
                 gift5: 'treats/istockphoto-2155253329-612x612-removebg-preview.png',
-                gift6: 'treats/emojis.com minecraft-dog.png',
-                gift7: 'treats/emojis.com minecraft-￼.png',
+                gift6: 'img/cherry-removebg-preview.png',
+                gift7: 'img/coin.png',
                 gift8: 'img2/error 1.jpg',
                 gift9: 'img/cherry-removebg-preview.png',
                 gift10: 'treats/images-removebg-preview (1).png',
                 gift11: 'treats/images-removebg-preview.png',
+                gift12: 'img2/error 2.jpg',
+                gift13: 'img2/error 3.jpg',
             };
 
             let currentGift = null;
@@ -673,17 +723,19 @@
 
             // Gift positions (percentage from top and left)
             const giftPositions = [
-                { class: 'gift4', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift5', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift4', src: 'img/doncky.png' },
+                { class: 'gift5', src: 'img/dog.png' },
                 { class: 'gift6', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift7', src: 'img/gift-removebg-preview.png' },
+                { class: 'gift7', src: 'img/cherry-removebg-preview.png' },
                 { class: 'gift8', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift9', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift10', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift11', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift1', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift2', src: 'img/gift-removebg-preview.png' },
-                { class: 'gift3', src: 'img/gift-removebg-preview.png' }
+                { class: 'gift9', src: 'img/sheep.png' },
+                { class: 'gift10', src: 'img/bee.png' },
+                { class: 'gift11', src: 'img/chick_final-removebg-preview.png' },
+                { class: 'gift12', src: 'img/blackgift.png' },
+                { class: 'gift13', src: 'img/blackgift.png' },
+                { class: 'gift1', src: 'img/sheep.png' },
+                { class: 'gift2', src: 'img/bee.png' },
+                { class: 'gift3', src: 'img/chick_final-removebg-preview.png' }
             ];
 
             function handleGiftClick(event) {
@@ -709,27 +761,21 @@
                         popupImg.src = popupImagePath;
                     }
 
-                    // Control size
-                    if (giftClass === 'gift8') {
+                    // Control size and popup behavior for gift8, gift12, gift13
+                    if (giftClass === 'gift8' || giftClass === 'gift12' || giftClass === 'gift13') {
                         popupImg.style.width = '70vw';
                         popupImg.style.height = 'auto';
-                        // Show popup for gift8
                         popup.classList.add('active');
-                        // Apply animation
                         popupImg.classList.remove('animate', 'animate-long');
-                        void popupImg.offsetWidth; // Force reflow
+                        void popupImg.offsetWidth;
                         popupImg.classList.add('animate-long');
                     } else {
                         popupImg.style.width = '100%';
                         popupImg.style.height = 'auto';
-                        // Show popup for other gifts
                         popup.classList.add('active');
-                        // Apply animation
                         popupImg.classList.remove('animate', 'animate-long');
-                        void popupImg.offsetWidth; // Force reflow
+                        void popupImg.offsetWidth;
                         popupImg.classList.add('animate');
-
-                        // Auto hide after 2 seconds for non-gift8
                         setTimeout(() => {
                             closePopup();
                         }, 2000);
@@ -744,16 +790,16 @@
                 currentGift = null;
             }
 
-            // Handle popup click to close
+            // Handle popup click to close for gift8, gift12, gift13
             popup.addEventListener('click', (event) => {
-                if (currentGift === 'gift8') {
+                if (currentGift === 'gift8' || currentGift === 'gift12' || currentGift === 'gift13') {
                     closePopup();
                 }
             });
 
-            // Remove the stopPropagation to allow clicks to reach the popup
+            // Also allow closing by clicking the image for gift8, gift12, gift13
             popupImg.addEventListener('click', () => {
-                if (currentGift === 'gift8') {
+                if (currentGift === 'gift8' || currentGift === 'gift12' || currentGift === 'gift13') {
                     closePopup();
                 }
             });
