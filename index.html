@@ -667,8 +667,28 @@
 </head>
 
 <body>
+    <div class="video-overlay" id="videoOverlay"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 3000; display: flex; align-items: center; justify-content: center;">
+        <div class="start-popup" id="startPopup"
+            style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+            <button id="startBtn"
+                style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ</button>
+        </div>
+        <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
+            playsinline
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <div class="end-popup" id="endPopup"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
+            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+                <div style="margin-bottom: 20px;">جاهز للبدء؟</div>
+                <button id="endBtn"
+                    style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ
+                    اللعبة</button>
+            </div>
+        </div>
+    </div>
     <div class="one">
-        <img src="img/full نهائي (1).jpg" class="img1" alt="">
+        <img src="img/fc.jpg" class="img1" alt="">
         <!-- Gifts will be added here dynamically -->
     </div>
     <div class="li">
@@ -906,6 +926,80 @@
 
             // Debug: Log all gift elements to verify they exist
             console.log('All gift elements:', document.querySelectorAll('.gift'));
+
+            // نظام الفيديو التفاعلي - أبسط وأكثر موثوقية
+            document.addEventListener('DOMContentLoaded', function () {
+                const videoOverlay = document.getElementById('videoOverlay');
+                const startPopup = document.getElementById('startPopup');
+                const startBtn = document.getElementById('startBtn');
+                const introVideo = document.getElementById('introVideo');
+                const endPopup = document.getElementById('endPopup');
+                const endBtn = document.getElementById('endBtn');
+
+                console.log('تم تحميل الصفحة');
+                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, endPopup, endBtn });
+
+                // زر ابدأ الأول - إزالة جميع event listeners السابقة
+                if (startBtn) {
+                    console.log('زر ابدأ موجود');
+                    // إزالة جميع event listeners السابقة
+                    startBtn.replaceWith(startBtn.cloneNode(true));
+                    const newStartBtn = document.getElementById('startBtn');
+
+                    newStartBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('تم الضغط على ابدأ');
+                        startPopup.style.display = 'none';
+                        introVideo.style.display = 'block';
+                        introVideo.muted = false;
+                        console.log('محاولة تشغيل الفيديو');
+                        introVideo.play().then(function () {
+                            console.log('الفيديو بدأ يشتغل');
+                        }).catch(function (error) {
+                            console.log('خطأ في الفيديو:', error);
+                            // إذا فشل الفيديو، اعرض الـ popup التالي
+                            setTimeout(function () {
+                                endPopup.style.opacity = '1';
+                                endPopup.style.pointerEvents = 'all';
+                            }, 2000);
+                        });
+                    });
+                } else {
+                    console.log('زر ابدأ مش موجود!');
+                }
+
+                // عند انتهاء الفيديو
+                if (introVideo) {
+                    introVideo.addEventListener('ended', function () {
+                        console.log('انتهى الفيديو');
+                        endPopup.style.opacity = '1';
+                        endPopup.style.pointerEvents = 'all';
+                    });
+                }
+
+                // زر ابدأ اللعبة - إزالة جميع event listeners السابقة
+                if (endBtn) {
+                    console.log('زر ابدأ اللعبة موجود');
+                    // إزالة جميع event listeners السابقة
+                    endBtn.replaceWith(endBtn.cloneNode(true));
+                    const newEndBtn = document.getElementById('endBtn');
+
+                    newEndBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('تم الضغط على ابدأ اللعبة');
+                        videoOverlay.style.display = 'none';
+                    });
+                } else {
+                    console.log('زر ابدأ اللعبة مش موجود!');
+                }
+
+                // اختبار سريع - اضغط على أي مكان في الصفحة
+                document.addEventListener('click', function (e) {
+                    console.log('تم الضغط في:', e.target);
+                });
+            });
         </script>
     </div>
 </body>
