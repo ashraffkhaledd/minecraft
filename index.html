@@ -91,8 +91,8 @@
 
         .gift {
             position: absolute;
-            width: clamp(40px, 5vw, 60px);
-            height: clamp(40px, 5vw, 60px);
+            width: 90px;
+            height: 90px;
             z-index: 10;
             cursor: pointer;
             animation: glow 2s ease-in-out infinite;
@@ -402,22 +402,22 @@
         /* Responsive adjustments for different screen sizes */
         @media (min-width: 1200px) {
             .gift {
-                width: clamp(50px, 4vw, 70px);
-                height: clamp(50px, 4vw, 70px);
+                width: clamp(75px, 6vw, 105px);
+                height: clamp(75px, 6vw, 105px);
             }
         }
 
         @media (max-width: 768px) {
             .gift {
-                width: clamp(35px, 6vw, 50px);
-                height: clamp(35px, 6vw, 50px);
+                width: clamp(52px, 9vw, 75px);
+                height: clamp(52px, 9vw, 75px);
             }
         }
 
         @media (max-width: 480px) {
             .gift {
-                width: clamp(30px, 8vw, 40px);
-                height: clamp(30px, 8vw, 40px);
+                width: clamp(45px, 12vw, 60px);
+                height: clamp(45px, 12vw, 60px);
             }
         }
 
@@ -585,8 +585,8 @@
 
         .gift {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 90px;
+            height: 90px;
             z-index: 10;
             cursor: pointer;
         }
@@ -654,12 +654,12 @@
         }
 
         .gift12 {
-            top: 93%;
+            top: 72.2%;
             left: 20%;
         }
 
         .gift13 {
-            top: 78.3%;
+            top: 50%;
             left: 18%;
         }
 
@@ -681,25 +681,25 @@
 </head>
 
 <body>
-    <div class="video-overlay" id="videoOverlay"
+    <!-- <div class="video-overlay" id="videoOverlay"
         style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
         <div class="start-popup" id="startPopup"
             style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
             <button id="startBtn"
                 style="font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665);  animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
+        </div> -->
+    <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
+        playsinline
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+    <div class="end-popup" id="endPopup"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
+        <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+            <div style="margin-bottom: 20px;">جاهز للبدء؟</div>
+            <button id="endBtn"
+                style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ
+                اللعبة</button>
         </div>
-        <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
-            playsinline
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
-        <div class="end-popup" id="endPopup"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
-            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
-                <div style="margin-bottom: 20px;">جاهز للبدء؟</div>
-                <button id="endBtn"
-                    style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ
-                    اللعبة</button>
-            </div>
-        </div>
+    </div>
     </div>
     <div class="one">
         <img src="img/fc.jpg" class="img1" alt="">
@@ -730,8 +730,8 @@
                 gift9: new Audio('audio/sheap.mp3'),
                 gift10: new Audio('audio/bee audio.mp3'),
                 gift11: new Audio('audio/chicken.mp3'),
-                gift12: new Audio('audio/error.psd.mp3'),
-                gift13: new Audio('audio/error.psd.mp3'),
+                gift12: new Audio('audio/error-call-to-attention-129258.mp3'),
+                gift13: new Audio('audio/error-call-to-attention-129258.mp3'),
             };
 
             // Popup images for gifts
@@ -743,12 +743,12 @@
                 gift5: 'treats/istockphoto-2155253329-612x612-removebg-preview.png',
                 gift6: 'img/cherry-removebg-preview.png',
                 gift7: 'img/coin.png',
-                gift8: 'img2/error 1.jpg',
+                gift8: 'img2/error 3 copy عربي.jpg',
                 gift9: 'img/cherry-removebg-preview.png',
                 gift10: 'treats/images-removebg-preview (1).png',
                 gift11: 'treats/images-removebg-preview.png',
-                gift12: 'img2/error 2.jpg',
-                gift13: 'img2/error 3.jpg',
+                gift12: 'img2/error 3 copy عربي 2.jpg',
+                gift13: 'img2/error 3 copyعربي 3.jpg',
             };
 
             let currentGift = null;
