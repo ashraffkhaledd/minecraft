@@ -27,6 +27,7 @@
             width: 100%;
             height: auto;
             display: block;
+            will-change: transform;
         }
 
         .img2 {
@@ -34,6 +35,7 @@
             height: auto;
             display: block;
             background-color: #fff;
+            will-change: transform;
         }
 
         .li {
@@ -98,8 +100,8 @@
             height: 90px;
             z-index: 10;
             cursor: pointer;
-            animation: glow 2s ease-in-out infinite;
-            transition: transform 0.3s ease;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .gift:hover {
@@ -110,6 +112,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            will-change: transform;
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
         }
 
@@ -751,25 +754,25 @@
 </head>
 
 <body>
-    <!-- <div class="video-overlay" id="videoOverlay"
+    <div class="video-overlay" id="videoOverlay"
         style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
         <div class="start-popup" id="startPopup"
             style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
             <button id="startBtn"
                 style="font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665);  animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
-        </div> -->
-    <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
-        playsinline
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
-    <div class="end-popup" id="endPopup"
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
-        <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
-            <div style="margin-bottom: 20px;">جاهز للبدء؟</div>
-            <button id="endBtn"
-                style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ
-                اللعبة</button>
         </div>
-    </div>
+        <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
+            playsinline
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <div class="end-popup" id="endPopup"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
+            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+                <div style="margin-bottom: 20px;">جاهز للبدء؟</div>
+                <button id="endBtn"
+                    style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ
+                    اللعبة</button>
+            </div>
+        </div>
     </div>
     <div class="one">
         <img src="img/fc.jpg" class="img1" alt="">
@@ -792,7 +795,27 @@
         </div>
 
         <script>
-            // Sound effects for gifts
+            // Preload critical images for better performance
+            const preloadImages = [
+                'img/fc.jpg',
+                'img/نهائي 2.jpg',
+                'img/sheep.png',
+                'img/bee.png',
+                'img/chick_final-removebg-preview.png',
+                'img/doncky.png',
+                'img/dog.png',
+                'img/gift-removebg-preview.png',
+                'img/cherry-removebg-preview.png',
+                'img/blackgift.png'
+            ];
+
+            // Preload images
+            preloadImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+
+            // Sound effects for gifts - with error handling
             const sounds = {
                 gift1: new Audio('audio/sheap.mp3'),
                 gift2: new Audio('audio/bee audio.mp3'),
@@ -808,6 +831,11 @@
                 gift12: new Audio('audio/error-call-to-attention-129258.mp3'),
                 gift13: new Audio('audio/error-call-to-attention-129258.mp3'),
             };
+
+            // Preload audio files
+            Object.values(sounds).forEach(audio => {
+                audio.load();
+            });
 
             // Popup images for gifts
             const images = {
@@ -829,6 +857,7 @@
             let currentGift = null;
             const popup = document.getElementById('popup');
             const popupImg = document.getElementById('popup-img');
+            let imageCount = 0;
 
             // Gift positions (percentage from top and left)
             const giftPositions = [
@@ -855,7 +884,7 @@
                     currentGift = giftClass;
                     console.log('Clicked gift:', giftClass);
 
-                    // Play sound
+                    // Play sound with error handling
                     const sound = sounds[giftClass];
                     if (sound) {
                         console.log('Playing sound for:', giftClass);
@@ -920,6 +949,7 @@
                 const giftImg = document.createElement('img');
                 giftImg.src = gift.src;
                 giftImg.alt = 'Gift';
+                giftImg.loading = 'lazy'; // Lazy loading for better performance
                 giftElement.appendChild(giftImg);
 
                 // Add click event listener
@@ -972,10 +1002,6 @@
                 });
             }
 
-            // Add gifts to first image (not loop gifts)
-            const firstImageContainer = document.querySelector('.one');
-            addGiftsToContainer(firstImageContainer, false);
-
             function createImageWithGifts() {
                 const imageWrapper = document.createElement('div');
                 imageWrapper.className = 'image-wrapper';
@@ -983,6 +1009,7 @@
                 const img = document.createElement('img');
                 img.src = 'img/نهائي 2.jpg';
                 img.className = 'img2';
+                img.loading = 'lazy'; // Lazy loading for better performance
                 imageWrapper.appendChild(img);
 
                 // Add gifts to this image (loop gifts)
@@ -991,48 +1018,80 @@
                 return imageWrapper;
             }
 
-            // Add initial images
-            for (let i = 0; i < 2; i++) {
-                scrollContainer.appendChild(createImageWithGifts());
-            }
+            // Initialize everything after DOM is loaded
+            function initializeGame() {
+                console.log('Initializing game...');
 
-            function checkAndAddImage() {
-                const scrollBottom = window.scrollY + window.innerHeight;
-                const documentHeight = document.documentElement.scrollHeight;
-
-                // If we're near the bottom, add another image
-                if (scrollBottom >= documentHeight - 100) {
-                    scrollContainer.appendChild(createImageWithGifts());
-                    imageCount++;
+                // Add gifts to first image (not loop gifts)
+                const firstImageContainer = document.querySelector('.one');
+                if (firstImageContainer) {
+                    addGiftsToContainer(firstImageContainer, false);
+                    console.log('Added gifts to first image');
                 }
-            }
 
-            // Listen for scroll events
-            window.addEventListener('scroll', checkAndAddImage);
+                // Add initial images
+                const scrollContainer = document.getElementById('scrollContainer');
+                if (scrollContainer) {
+                    for (let i = 0; i < 2; i++) {
+                        scrollContainer.appendChild(createImageWithGifts());
+                    }
+                    console.log('Added initial images');
+                }
 
-            // Initial check
-            checkAndAddImage();
+                // Throttled scroll handler for better performance
+                let scrollTimeout;
+                function checkAndAddImage() {
+                    const scrollBottom = window.scrollY + window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
 
-            // Hide scroll instruction when user starts scrolling
-            const scrollInstruction = document.getElementById('scrollInstruction');
-            let hasScrolled = false;
-
-            window.addEventListener('scroll', function () {
-                if (!hasScrolled && window.scrollY > 100) {
-                    hasScrolled = true;
-                    if (scrollInstruction) {
-                        scrollInstruction.style.opacity = '0';
-                        setTimeout(() => {
-                            scrollInstruction.style.display = 'none';
-                        }, 500);
+                    // If we're near the bottom, add another image
+                    if (scrollBottom >= documentHeight - 100) {
+                        if (scrollContainer) {
+                            scrollContainer.appendChild(createImageWithGifts());
+                            imageCount++;
+                        }
                     }
                 }
-            });
 
-            // Debug: Log all gift elements to verify they exist
-            console.log('All gift elements:', document.querySelectorAll('.gift'));
+                // Throttled scroll event listener
+                window.addEventListener('scroll', () => {
+                    if (scrollTimeout) return;
+                    scrollTimeout = setTimeout(() => {
+                        checkAndAddImage();
+                        scrollTimeout = null;
+                    }, 100);
+                });
 
-            // نظام الفيديو التفاعلي - أبسط وأكثر موثوقية
+                // Initial check
+                checkAndAddImage();
+
+                // Hide scroll instruction when user starts scrolling
+                const scrollInstruction = document.getElementById('scrollInstruction');
+                let hasScrolled = false;
+
+                window.addEventListener('scroll', function () {
+                    if (!hasScrolled && window.scrollY > 100) {
+                        hasScrolled = true;
+                        if (scrollInstruction) {
+                            scrollInstruction.style.opacity = '0';
+                            setTimeout(() => {
+                                scrollInstruction.style.display = 'none';
+                            }, 500);
+                        }
+                    }
+                });
+
+                console.log('Game initialized successfully');
+            }
+
+            // Wait for DOM to be fully loaded
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeGame);
+            } else {
+                initializeGame();
+            }
+
+            // نظام الفيديو التفاعلي - محسن للأداء
             document.addEventListener('DOMContentLoaded', function () {
                 const videoOverlay = document.getElementById('videoOverlay');
                 const startPopup = document.getElementById('startPopup');
@@ -1044,14 +1103,10 @@
                 console.log('تم تحميل الصفحة');
                 console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, endPopup, endBtn });
 
-                // زر ابدأ الأول - إزالة جميع event listeners السابقة
+                // زر ابدأ الأول
                 if (startBtn) {
                     console.log('زر ابدأ موجود');
-                    // إزالة جميع event listeners السابقة
-                    startBtn.replaceWith(startBtn.cloneNode(true));
-                    const newStartBtn = document.getElementById('startBtn');
-
-                    newStartBtn.addEventListener('click', function (e) {
+                    startBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         console.log('تم الضغط على ابدأ');
@@ -1063,7 +1118,6 @@
                             console.log('الفيديو بدأ يشتغل');
                         }).catch(function (error) {
                             console.log('خطأ في الفيديو:', error);
-                            // إذا فشل الفيديو، اعرض الـ popup التالي
                             setTimeout(function () {
                                 endPopup.style.opacity = '1';
                                 endPopup.style.pointerEvents = 'all';
@@ -1083,14 +1137,10 @@
                     });
                 }
 
-                // زر ابدأ اللعبة - إزالة جميع event listeners السابقة
+                // زر ابدأ اللعبة
                 if (endBtn) {
                     console.log('زر ابدأ اللعبة موجود');
-                    // إزالة جميع event listeners السابقة
-                    endBtn.replaceWith(endBtn.cloneNode(true));
-                    const newEndBtn = document.getElementById('endBtn');
-
-                    newEndBtn.addEventListener('click', function (e) {
+                    endBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         console.log('تم الضغط على ابدأ اللعبة');
@@ -1099,11 +1149,6 @@
                 } else {
                     console.log('زر ابدأ اللعبة مش موجود!');
                 }
-
-                // اختبار سريع - اضغط على أي مكان في الصفحة
-                document.addEventListener('click', function (e) {
-                    console.log('تم الضغط في:', e.target);
-                });
             });
         </script>
     </div>
