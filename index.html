@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         Reset * {
@@ -654,7 +657,7 @@
         }
 
         .gift12 {
-            top: 72.2%;
+            top: 105.2%;
             left: 20%;
         }
 
@@ -674,6 +677,73 @@
             50% {
                 box-shadow: 0 4px 20px rgba(255, 1, 1, 0.9), 0 0 30px rgba(255, 0, 0, 0.5), 0 0 45px rgba(255, 0, 0, 0.9), 0 0 60px rgba(255, 0, 0, 0.7);
                 transform: scale(1.05);
+            }
+        }
+
+        /* Scroll Instruction Animation */
+        .scroll-instruction {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8B4513;
+            font-size: 42px;
+            font-weight: bold;
+            font-family: 'Handjet', cursive;
+            text-align: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
+            text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            direction: rtl;
+        }
+
+        .scroll-instruction span {
+            display: inline-block;
+            animation: waveAnimation 2s ease-in-out infinite;
+        }
+
+        .scroll-instruction .word1 {
+            animation-delay: 0s;
+        }
+
+        .scroll-instruction .word2 {
+            animation-delay: 0.3s;
+        }
+
+        .scroll-instruction .word3 {
+            animation-delay: 0.6s;
+        }
+
+        .scroll-instruction .arrow {
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 40px;
+            animation: arrowBounce 1.5s ease-in-out infinite;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
+        }
+
+        @keyframes waveAnimation {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes arrowBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
             }
         }
     </style>
@@ -703,6 +773,11 @@
     </div>
     <div class="one">
         <img src="img/fc.jpg" class="img1" alt="">
+        <!-- Scroll Instruction -->
+        <div class="scroll-instruction" id="scrollInstruction">
+            <span class="word1">انزل</span> <span class="word2">إلى</span> <span class="word3">الأسفل</span> <span
+                class="arrow">↓</span>
+        </div>
         <!-- Gifts will be added here dynamically -->
     </div>
     <div class="li">
@@ -937,6 +1012,22 @@
 
             // Initial check
             checkAndAddImage();
+
+            // Hide scroll instruction when user starts scrolling
+            const scrollInstruction = document.getElementById('scrollInstruction');
+            let hasScrolled = false;
+
+            window.addEventListener('scroll', function () {
+                if (!hasScrolled && window.scrollY > 100) {
+                    hasScrolled = true;
+                    if (scrollInstruction) {
+                        scrollInstruction.style.opacity = '0';
+                        setTimeout(() => {
+                            scrollInstruction.style.display = 'none';
+                        }, 500);
+                    }
+                }
+            });
 
             // Debug: Log all gift elements to verify they exist
             console.log('All gift elements:', document.querySelectorAll('.gift'));
