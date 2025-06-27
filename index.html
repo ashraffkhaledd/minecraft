@@ -132,76 +132,10 @@
             will-change: transform;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-            -webkit-filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            animation: pulse-shadow 2s ease-in-out infinite;
         }
 
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 5px rgba(255, 215, 0, 0.5),
-                    0 0 10px rgba(255, 215, 0, 0.3),
-                    0 0 15px rgba(255, 215, 0, 0.1);
-            }
-
-            50% {
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.8),
-                    0 0 20px rgba(255, 215, 0, 0.5),
-                    0 0 30px rgba(255, 215, 0, 0.3);
-            }
-
-            100% {
-                box-shadow: 0 0 5px rgba(255, 215, 0, 0.5),
-                    0 0 10px rgba(255, 215, 0, 0.3),
-                    0 0 15px rgba(255, 215, 0, 0.1);
-            }
-        }
-
-        /* Different colors for different gifts */
-        .gift1 {
-            animation: glow1 2s ease-in-out infinite;
-        }
-
-        .gift2 {
-            animation: glow2 2s ease-in-out infinite;
-        }
-
-        .gift3 {
-            animation: glow3 2s ease-in-out infinite;
-        }
-
-        .gift4 {
-            animation: glow4 2s ease-in-out infinite;
-        }
-
-        .gift5 {
-            animation: glow5 2s ease-in-out infinite;
-        }
-
-        .gift6 {
-            animation: glow6 2s ease-in-out infinite;
-        }
-
-        .gift7 {
-            animation: glow7 2s ease-in-out infinite;
-        }
-
-        .gift8 {
-            animation: glow8 2s ease-in-out infinite;
-        }
-
-        .gift9 {
-            animation: glow9 2s ease-in-out infinite;
-        }
-
-        .gift10 {
-            animation: glow10 2s ease-in-out infinite;
-        }
-
-        .gift11 {
-            animation: glow11 2s ease-in-out infinite;
-        }
-
-        @keyframes glow1 {
+        @keyframes pulse-shadow {
 
             0%,
             100% {
@@ -215,144 +149,21 @@
             }
         }
 
-        @keyframes glow2 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow3 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow4 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow5 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow6 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow7 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow8 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow9 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow10 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
-        }
-
-        @keyframes glow11 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
-            }
+        /* All gifts have the same simple white shadow - no animations */
+        .gift1,
+        .gift2,
+        .gift3,
+        .gift4,
+        .gift5,
+        .gift6,
+        .gift7,
+        .gift8,
+        .gift9,
+        .gift10,
+        .gift11,
+        .gift12,
+        .gift13 {
+            /* No individual animations - all use the default white shadow */
         }
 
         /* Gift positions using percentages */
@@ -414,37 +225,11 @@
         .gift12 {
             top: 93%;
             left: 20%;
-            animation: glow12 2s ease-in-out infinite;
         }
 
         .gift13 {
             top: 78.3%;
             left: 18%;
-            animation: glow13 2s ease-in-out infinite;
-        }
-
-        @keyframes glow12 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
-            }
-        }
-
-        @keyframes glow13 {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
-            }
         }
 
         /* Responsive adjustments for different screen sizes */
@@ -684,12 +469,12 @@
         }
 
         .gift12 {
-            top: 105.2%;
+            top: 93%;
             left: 20%;
         }
 
         .gift13 {
-            top: 50%;
+            top: 78.3%;
             left: 18%;
         }
 
@@ -814,7 +599,7 @@
 </head>
 
 <body>
-    <div class="video-overlay" id="videoOverlay"
+    <!-- <div class="video-overlay" id="videoOverlay"
         style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
         <div class="start-popup" id="startPopup"
             style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
@@ -833,7 +618,7 @@
                     اللعبة</button>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="one">
         <img src="img/fc.jpg" class="img1" alt="">
         <!-- Scroll Instruction -->
