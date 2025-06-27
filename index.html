@@ -834,57 +834,52 @@
                 font-size: 32px;
             }
 
-            /* تحسين شادو الهدايا للموبايل الصغير */
-            .gift img {
-                filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-                -webkit-filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-            }
-        }
 
-        /* تحسينات الأداء للموبايل */
-        @media (max-width: 768px) {
-            .gift {
-                transform: translateZ(0);
-                -webkit-transform: translateZ(0);
+
+            /* تحسينات الأداء للموبايل */
+            @media (max-width: 768px) {
+                .gift {
+                    transform: translateZ(0);
+                    -webkit-transform: translateZ(0);
+                    will-change: transform;
+                    -webkit-will-change: transform;
+                }
+
+                .gift img {
+                    transform: translateZ(0);
+                    -webkit-transform: translateZ(0);
+                }
+            }
+
+            /* تحسينات الأداء للفيديو */
+            .video-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 120vh;
+                background: url('img2/1012949.png') center center;
+                background-size: cover;
+                z-index: 3000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 will-change: transform;
-                -webkit-will-change: transform;
-            }
-
-            .gift img {
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
             }
-        }
 
-        /* تحسينات الأداء للفيديو */
-        .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 120vh;
-            background: url('img2/1012949.png') center center;
-            background-size: cover;
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            will-change: transform;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-
-        .intro-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            will-change: transform;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
+            .intro-video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                will-change: transform;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+            }
     </style>
 
 </head>
