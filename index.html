@@ -9,8 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="preload" as="image" href="img/full نهائي (1).jpg">
-    <link rel="preload" as="video" href="video/البداية بالطول_1.mp4">
     <style>
         Reset * {
             margin: 0;
@@ -935,7 +933,6 @@
                 giftImg.alt = 'Gift';
                 giftImg.loading = 'lazy'; // Lazy loading for better performance
                 giftImg.decoding = 'async'; // Async decoding for better performance
-                giftImg.onerror = function () { this.src = 'img/placeholder.png'; };
                 giftElement.appendChild(giftImg);
 
                 // Add animated arrows only for the first gift1
