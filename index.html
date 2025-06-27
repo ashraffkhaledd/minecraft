@@ -1127,9 +1127,18 @@
                         console.log('انتهى الفيديو');
                         videoOverlay.style.display = 'none';
                         setTimeout(function () {
-                            minecraftMusic.currentTime = 0;
-                            minecraftMusic.play().catch(() => { });
-                        }, 100); // slight delay to ensure overlay is hidden
+                            minecraftMusic.play().catch(() => {
+                                alert('يرجى الضغط في أي مكان لتشغيل الموسيقى');
+                                // Enable music on next user interaction
+                                const enableMusic = () => {
+                                    minecraftMusic.play();
+                                    document.removeEventListener('click', enableMusic);
+                                    document.removeEventListener('touchstart', enableMusic);
+                                };
+                                document.addEventListener('click', enableMusic);
+                                document.addEventListener('touchstart', enableMusic);
+                            });
+                        }, 100);
                     });
                 }
             });
