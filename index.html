@@ -91,7 +91,7 @@
         }
 
         .gift-popup img.animate {
-            animation: popup-zoom 3s ease-in-out forwards;
+            animation: popup-zoom 1s ease-in-out forwards;
         }
 
         .gift-popup img.animate-long {
@@ -417,6 +417,14 @@
                 width: clamp(75px, 6vw, 105px);
                 height: clamp(75px, 6vw, 105px);
             }
+
+            /* Special sizes for gifts 3, 4, and 11 */
+            .gift3,
+            .gift4,
+            .gift11 {
+                width: 90px;
+                height: 90px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -424,12 +432,28 @@
                 width: clamp(52px, 9vw, 75px);
                 height: clamp(52px, 9vw, 75px);
             }
+
+            /* Special sizes for gifts 3, 4, and 11 */
+            .gift3,
+            .gift4,
+            .gift11 {
+                width: 90px;
+                height: 90px;
+            }
         }
 
         @media (max-width: 480px) {
             .gift {
                 width: clamp(45px, 12vw, 60px);
                 height: clamp(45px, 12vw, 60px);
+            }
+
+            /* Special sizes for gifts 3, 4, and 11 */
+            .gift3,
+            .gift4,
+            .gift11 {
+                width: 90px;
+                height: 90px;
             }
         }
 
@@ -515,48 +539,6 @@
             .gift8 {
                 top: 65.5%;
                 left: 22%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .gift1 {
-                top: 11.8%;
-                left: 14%;
-            }
-
-            .gift2 {
-                top: 21.1%;
-                left: 20%;
-            }
-
-            .gift3 {
-                top: 25.9%;
-                left: 24%;
-            }
-
-            .gift4 {
-                top: 38.67%;
-                left: 4%;
-            }
-
-            .gift5 {
-                top: 45%;
-                left: 65%;
-            }
-
-            .gift6 {
-                top: 50.7%;
-                left: 14%;
-            }
-
-            .gift7 {
-                top: 58%;
-                left: 64%;
-            }
-
-            .gift8 {
-                top: 65.5%;
-                left: 20%;
             }
         }
 
@@ -705,6 +687,23 @@
             direction: rtl;
         }
 
+        .scroll-instruction span {
+            display: inline-block;
+            animation: waveAnimation 2s ease-in-out infinite;
+        }
+
+        .scroll-instruction .word1 {
+            animation-delay: 0s;
+        }
+
+        .scroll-instruction .word2 {
+            animation-delay: 0.3s;
+        }
+
+        .scroll-instruction .word3 {
+            animation-delay: 0.6s;
+        }
+
         .scroll-instruction .arrow {
             display: inline-block;
             margin-left: 20px;
@@ -738,8 +737,7 @@
             }
         }
 
-        /* تحسينات خاصة للموبايل - معطلة مؤقتاً */
-        /*
+        /* تحسينات الشادو للموبايل */
         @media (max-width: 768px) {
             .scroll-instruction {
                 text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7);
@@ -768,6 +766,7 @@
             }
         }
 
+        /* تحسينات الأداء للموبايل */
         @media (max-width: 768px) {
             .gift {
                 transform: translateZ(0);
@@ -781,7 +780,6 @@
                 -webkit-transform: translateZ(0);
             }
         }
-        */
     </style>
 
 </head>
@@ -955,7 +953,7 @@
                         popupImg.classList.add('animate');
                         setTimeout(() => {
                             closePopup();
-                        }, 3000);
+                        }, 1000);
                     }
                 }
             }
