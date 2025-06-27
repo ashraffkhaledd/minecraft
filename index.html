@@ -149,27 +149,14 @@
             }
         }
 
-        /* All gifts have the same simple white shadow - no animations */
-        .gift1,
-        .gift2,
-        .gift3,
-        .gift4,
-        .gift5,
-        .gift6,
-        .gift7,
-        .gift8,
-        .gift9,
-        .gift10,
-        .gift11,
-        .gift12,
-        .gift13 {
-            /* No individual animations - all use the default white shadow */
-        }
+
 
         /* Gift positions using percentages */
         .gift1 {
             top: 12.2%;
             left: 18%;
+            width: 230px !important;
+            height: 230px !important;
         }
 
         .gift2 {
@@ -234,6 +221,11 @@
 
         /* Responsive adjustments for different screen sizes */
         @media (min-width: 1200px) {
+            .gift1 {
+                width: 260px !important;
+                height: 260px !important;
+            }
+
             .gift {
                 width: clamp(75px, 6vw, 105px);
                 height: clamp(75px, 6vw, 105px);
@@ -249,6 +241,11 @@
         }
 
         @media (max-width: 768px) {
+            .gift1 {
+                width: 160px !important;
+                height: 160px !important;
+            }
+
             .gift {
                 width: clamp(52px, 9vw, 75px);
                 height: clamp(52px, 9vw, 75px);
@@ -264,6 +261,11 @@
         }
 
         @media (max-width: 480px) {
+            .gift1 {
+                width: 120px !important;
+                height: 120px !important;
+            }
+
             .gift {
                 width: clamp(45px, 12vw, 60px);
                 height: clamp(45px, 12vw, 60px);
@@ -515,21 +517,21 @@
         /* Scroll Instruction Animation */
         .scroll-instruction {
             position: absolute;
-            top: 80px;
+            top: 1266px;
             left: 50%;
             transform: translateX(-50%);
-            color: #8B4513;
+            color: white;
             font-size: 42px;
             font-weight: bold;
             font-family: 'Handjet', cursive;
             text-align: center;
             z-index: 1000;
-            text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
-            -webkit-text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
             direction: rtl;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            text-shadow: 4px 8px 16px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.7);
+            -webkit-text-shadow: 4px 8px 16px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.7);
         }
 
         .scroll-instruction span {
@@ -614,12 +616,54 @@
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
         }
+
+        /* Arrows around gift1 */
+        .gift1-arrows {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+            transform: translate(-50%, -50%);
+        }
+
+        .gift1-arrow {
+            position: absolute;
+            font-size: 60px;
+            color: white;
+            text-shadow: 3px 3px 12px #ff0000, 0 0 20px #ff0000;
+            animation: arrowBounce 1.5s ease-in-out infinite;
+            -webkit-text-shadow: 3px 3px 12px #ff0000, 0 0 20px #ff0000;
+        }
+
+        .gift1-arrow.arrow-top-left {
+            left: 0%;
+            top: -40px;
+            transform: rotate(25deg);
+            animation-delay: 0s;
+        }
+
+        .gift1-arrow.arrow-top-right {
+            right: 0%;
+            top: -40px;
+            transform: rotate(-25deg);
+            animation-delay: 0.3s;
+        }
+
+        .gift1-arrow.arrow-bottom {
+            left: 44%;
+            bottom: -40px;
+            transform: translateX(-50%) rotate(180deg);
+            animation-delay: 0.6s;
+        }
     </style>
 
 </head>
 
 <body>
-    <div class="video-overlay" id="videoOverlay"
+    <!-- <div class="video-overlay" id="videoOverlay"
         style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
         <div class="start-popup" id="startPopup"
             style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
@@ -638,9 +682,9 @@
                     اللعبة</button>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="one">
-        <img src="img/fc.jpg" class="img1" alt="">
+        <img src="img/full نهائي (1).jpg" class="img1" alt="">
         <!-- Scroll Instruction -->
         <div class="scroll-instruction" id="scrollInstruction">
             <span class="word1">انزل</span> <span class="word2">إلى</span> <span class="word3">الأسفل</span> <span
@@ -833,6 +877,18 @@
                 giftImg.decoding = 'async'; // Async decoding for better performance
                 giftElement.appendChild(giftImg);
 
+                // Add animated arrows only for the first gift1
+                if (gift.class === 'gift1') {
+                    const arrows = document.createElement('div');
+                    arrows.className = 'gift1-arrows';
+                    arrows.innerHTML = `
+                        <span class="gift1-arrow arrow-top-left">↘</span>
+                        <span class="gift1-arrow arrow-top-right">↙</span>
+                        <span class="gift1-arrow arrow-bottom">↑</span>
+                    `;
+                    giftElement.appendChild(arrows);
+                }
+
                 // Add click event listener
                 giftElement.addEventListener('click', handleGiftClick);
 
@@ -877,8 +933,13 @@
                 return giftElement;
             }
 
-            function addGiftsToContainer(container, isLoopGift = false) {
+            function addGiftsToContainer(container, isLoopGift = false, skipGift12 = false) {
+                let usedGift12 = false;
                 giftPositions.forEach(gift => {
+                    if (skipGift12 && gift.class === 'gift12' && !usedGift12) {
+                        usedGift12 = true;
+                        return; // Skip the first gift12 only
+                    }
                     container.appendChild(createGift(gift, isLoopGift));
                 });
             }
@@ -904,11 +965,11 @@
             function initializeGame() {
                 console.log('Initializing game...');
 
-                // Add gifts to first image (not loop gifts)
+                // Add gifts to first image (not loop gifts), but skip first gift12
                 const firstImageContainer = document.querySelector('.one');
                 if (firstImageContainer) {
-                    addGiftsToContainer(firstImageContainer, false);
-                    console.log('Added gifts to first image');
+                    addGiftsToContainer(firstImageContainer, false, true);
+                    console.log('Added gifts to first image (skipping first gift12)');
                 }
 
                 // Add initial images
