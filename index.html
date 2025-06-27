@@ -702,30 +702,7 @@
             text-align: center;
             z-index: 1000;
             text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
-            -webkit-text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
             direction: rtl;
-            /* تحسينات للموبايل */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-
-        .scroll-instruction span {
-            display: inline-block;
-            animation: waveAnimation 2s ease-in-out infinite;
-        }
-
-        .scroll-instruction .word1 {
-            animation-delay: 0s;
-        }
-
-        .scroll-instruction .word2 {
-            animation-delay: 0.3s;
-        }
-
-        .scroll-instruction .word3 {
-            animation-delay: 0.6s;
         }
 
         .scroll-instruction .arrow {
@@ -735,12 +712,6 @@
             animation: arrowBounce 1.5s ease-in-out infinite;
             color: white;
             text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
-            -webkit-text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
-            /* تحسينات للموبايل */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
         }
 
         @keyframes waveAnimation {
@@ -767,7 +738,8 @@
             }
         }
 
-        /* تحسينات خاصة للموبايل */
+        /* تحسينات خاصة للموبايل - معطلة مؤقتاً */
+        /*
         @media (max-width: 768px) {
             .scroll-instruction {
                 text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7);
@@ -796,7 +768,6 @@
             }
         }
 
-        /* تحسينات الأداء للموبايل */
         @media (max-width: 768px) {
             .gift {
                 transform: translateZ(0);
@@ -810,12 +781,32 @@
                 -webkit-transform: translateZ(0);
             }
         }
+        */
     </style>
 
 </head>
 
 <body>
-
+    <!-- <div class="video-overlay" id="videoOverlay"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
+        <div class="start-popup" id="startPopup"
+            style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
+            <button id="startBtn"
+                style="font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665);  animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
+        </div>
+        <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
+            playsinline
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <div class="end-popup" id="endPopup"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
+            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+                <div style="margin-bottom: 20px;">جاهز للبدء؟</div>
+                <button id="endBtn"
+                    style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ
+                    اللعبة</button>
+            </div>
+        </div>
+    </div> -->
     <div class="one">
         <img src="img/fc.jpg" class="img1" alt="">
         <!-- Scroll Instruction -->
