@@ -778,104 +778,37 @@
             }
         }
 
-        /* تحسينات إضافية لضمان وضوح الشادو */
-        .scroll-instruction {
-            position: absolute;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #8B4513;
-            font-size: 42px;
-            font-weight: bold;
-            font-family: 'Handjet', cursive;
-            text-align: center;
-            z-index: 1000;
-            text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
-            -webkit-text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
-            direction: rtl;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+
+
+        /* تحسينات الأداء للفيديو */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 120vh;
+            background: url('img2/1012949.png') center center;
+            background-size: cover;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
-        /* تحسينات الشادو للموبايل */
-        @media (max-width: 768px) {
-            .scroll-instruction {
-                text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7);
-                -webkit-text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7);
-                font-size: 36px;
-                font-weight: 900;
-            }
-
-            .scroll-instruction .arrow {
-                text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.9), 0 0 12px rgba(255, 0, 0, 0.8);
-                -webkit-text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.9), 0 0 12px rgba(255, 0, 0, 0.8);
-                font-size: 36px;
-            }
-
-            /* تحسين شادو الهدايا للموبايل */
-
-
-            @media (max-width: 480px) {
-                .scroll-instruction {
-                    text-shadow: 1px 1px 3px rgba(255, 215, 0, 1), 0 0 10px rgba(255, 215, 0, 0.8);
-                    -webkit-text-shadow: 1px 1px 3px rgba(255, 215, 0, 1), 0 0 10px rgba(255, 215, 0, 0.8);
-                    font-size: 32px;
-                    font-weight: 900;
-                }
-
-                .scroll-instruction .arrow {
-                    text-shadow: 1px 1px 3px rgba(255, 0, 0, 1), 0 0 8px rgba(255, 0, 0, 0.9);
-                    -webkit-text-shadow: 1px 1px 3px rgba(255, 0, 0, 1), 0 0 8px rgba(255, 0, 0, 0.9);
-                    font-size: 32px;
-                }
-
-
-
-                /* تحسينات الأداء للموبايل */
-                @media (max-width: 768px) {
-                    .gift {
-                        transform: translateZ(0);
-                        -webkit-transform: translateZ(0);
-                        will-change: transform;
-                        -webkit-will-change: transform;
-                    }
-
-                    .gift img {
-                        transform: translateZ(0);
-                        -webkit-transform: translateZ(0);
-                    }
-                }
-
-                /* تحسينات الأداء للفيديو */
-                .video-overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100vw;
-                    height: 120vh;
-                    background: url('img2/1012949.png') center center;
-                    background-size: cover;
-                    z-index: 3000;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    will-change: transform;
-                    transform: translateZ(0);
-                    -webkit-transform: translateZ(0);
-                }
-
-                .intro-video {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    will-change: transform;
-                    transform: translateZ(0);
-                    -webkit-transform: translateZ(0);
-                }
+        .intro-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
     </style>
 
 </head>
