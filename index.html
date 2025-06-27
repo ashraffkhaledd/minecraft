@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         Reset * {
@@ -24,6 +27,9 @@
             width: 100%;
             height: auto;
             display: block;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .img2 {
@@ -31,6 +37,9 @@
             height: auto;
             display: block;
             background-color: #fff;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .li {
@@ -46,10 +55,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
             z-index: 999;
             max-width: 90%;
             max-height: 90vh;
             display: none;
+            will-change: transform;
         }
 
         .gift-popup img {
@@ -57,6 +68,9 @@
             height: auto;
             max-height: 80vh;
             object-fit: contain;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .gift-popup.active {
@@ -89,25 +103,37 @@
             animation: popup-zoom 2s ease-in-out forwards;
         }
 
-        .gift {
-            position: absolute;
-            width: clamp(40px, 5vw, 60px);
-            height: clamp(40px, 5vw, 60px);
-            z-index: 10;
-            cursor: pointer;
-            animation: glow 2s ease-in-out infinite;
-            transition: transform 0.3s ease;
+        .gift-popup img.animate-long {
+            animation: popup-zoom 3s ease-in-out forwards;
         }
 
-        .gift:hover {
-            transform: scale(1.1);
+        .gift {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            z-index: 10;
+            cursor: pointer;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .gift.active,
+        .gift:active {
+            transform: scale(1.3) translateZ(0);
+            -webkit-transform: scale(1.3) translateZ(0);
         }
 
         .gift img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            -webkit-filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
         }
 
         @keyframes glow {
@@ -179,11 +205,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -191,11 +219,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -203,11 +233,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -215,11 +247,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -227,11 +261,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -239,11 +275,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -251,11 +289,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -263,11 +303,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -275,11 +317,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -287,11 +331,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -299,11 +345,13 @@
 
             0%,
             100% {
-                filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+                filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+                -webkit-filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5));
+                filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
+                -webkit-filter: drop-shadow(0 0 15px rgba(255, 0, 0, 1)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.8));
             }
         }
 
@@ -402,22 +450,46 @@
         /* Responsive adjustments for different screen sizes */
         @media (min-width: 1200px) {
             .gift {
-                width: clamp(50px, 4vw, 70px);
-                height: clamp(50px, 4vw, 70px);
+                width: clamp(75px, 6vw, 105px);
+                height: clamp(75px, 6vw, 105px);
+            }
+
+            /* Special sizes for gifts 3, 4, and 11 */
+            .gift3,
+            .gift4,
+            .gift11 {
+                width: 90px;
+                height: 90px;
             }
         }
 
         @media (max-width: 768px) {
             .gift {
-                width: clamp(35px, 6vw, 50px);
-                height: clamp(35px, 6vw, 50px);
+                width: clamp(52px, 9vw, 75px);
+                height: clamp(52px, 9vw, 75px);
+            }
+
+            /* Special sizes for gifts 3, 4, and 11 */
+            .gift3,
+            .gift4,
+            .gift11 {
+                width: 90px;
+                height: 90px;
             }
         }
 
         @media (max-width: 480px) {
             .gift {
-                width: clamp(30px, 8vw, 40px);
-                height: clamp(30px, 8vw, 40px);
+                width: clamp(45px, 12vw, 60px);
+                height: clamp(45px, 12vw, 60px);
+            }
+
+            /* Special sizes for gifts 3, 4, and 11 */
+            .gift3,
+            .gift4,
+            .gift11 {
+                width: 90px;
+                height: 90px;
             }
         }
 
@@ -506,48 +578,6 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .gift1 {
-                top: 11.8%;
-                left: 14%;
-            }
-
-            .gift2 {
-                top: 21.1%;
-                left: 20%;
-            }
-
-            .gift3 {
-                top: 25.9%;
-                left: 24%;
-            }
-
-            .gift4 {
-                top: 38.67%;
-                left: 4%;
-            }
-
-            .gift5 {
-                top: 45%;
-                left: 65%;
-            }
-
-            .gift6 {
-                top: 50.7%;
-                left: 14%;
-            }
-
-            .gift7 {
-                top: 58%;
-                left: 64%;
-            }
-
-            .gift8 {
-                top: 65.5%;
-                left: 20%;
-            }
-        }
-
         @media (max-width: 600px) {
             .top-image {
                 min-height: 100vh;
@@ -585,8 +615,8 @@
 
         .gift {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 90px;
+            height: 90px;
             z-index: 10;
             cursor: pointer;
         }
@@ -654,12 +684,12 @@
         }
 
         .gift12 {
-            top: 93%;
+            top: 105.2%;
             left: 20%;
         }
 
         .gift13 {
-            top: 78.3%;
+            top: 50%;
             left: 18%;
         }
 
@@ -675,6 +705,185 @@
                 box-shadow: 0 4px 20px rgba(255, 1, 1, 0.9), 0 0 30px rgba(255, 0, 0, 0.5), 0 0 45px rgba(255, 0, 0, 0.9), 0 0 60px rgba(255, 0, 0, 0.7);
                 transform: scale(1.05);
             }
+        }
+
+        /* Scroll Instruction Animation */
+        .scroll-instruction {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8B4513;
+            font-size: 42px;
+            font-weight: bold;
+            font-family: 'Handjet', cursive;
+            text-align: center;
+            z-index: 1000;
+            text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            -webkit-text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            direction: rtl;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        .scroll-instruction span {
+            display: inline-block;
+            animation: waveAnimation 2s ease-in-out infinite;
+        }
+
+        .scroll-instruction .word1 {
+            animation-delay: 0s;
+        }
+
+        .scroll-instruction .word2 {
+            animation-delay: 0.3s;
+        }
+
+        .scroll-instruction .word3 {
+            animation-delay: 0.6s;
+        }
+
+        .scroll-instruction .arrow {
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 40px;
+            animation: arrowBounce 1.5s ease-in-out infinite;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
+            -webkit-text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
+        }
+
+        @keyframes waveAnimation {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes arrowBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        /* تحسينات إضافية لضمان وضوح الشادو */
+        .scroll-instruction {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #8B4513;
+            font-size: 42px;
+            font-weight: bold;
+            font-family: 'Handjet', cursive;
+            text-align: center;
+            z-index: 1000;
+            text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            -webkit-text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            direction: rtl;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* تحسينات الشادو للموبايل */
+        @media (max-width: 768px) {
+            .scroll-instruction {
+                text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7);
+                -webkit-text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7);
+                font-size: 36px;
+                font-weight: 900;
+            }
+
+            .scroll-instruction .arrow {
+                text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.9), 0 0 12px rgba(255, 0, 0, 0.8);
+                -webkit-text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.9), 0 0 12px rgba(255, 0, 0, 0.8);
+                font-size: 36px;
+            }
+
+            /* تحسين شادو الهدايا للموبايل */
+            .gift img {
+                filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+                -webkit-filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scroll-instruction {
+                text-shadow: 1px 1px 3px rgba(255, 215, 0, 1), 0 0 10px rgba(255, 215, 0, 0.8);
+                -webkit-text-shadow: 1px 1px 3px rgba(255, 215, 0, 1), 0 0 10px rgba(255, 215, 0, 0.8);
+                font-size: 32px;
+                font-weight: 900;
+            }
+
+            .scroll-instruction .arrow {
+                text-shadow: 1px 1px 3px rgba(255, 0, 0, 1), 0 0 8px rgba(255, 0, 0, 0.9);
+                -webkit-text-shadow: 1px 1px 3px rgba(255, 0, 0, 1), 0 0 8px rgba(255, 0, 0, 0.9);
+                font-size: 32px;
+            }
+
+            /* تحسين شادو الهدايا للموبايل الصغير */
+            .gift img {
+                filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+                -webkit-filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            }
+        }
+
+        /* تحسينات الأداء للموبايل */
+        @media (max-width: 768px) {
+            .gift {
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                will-change: transform;
+                -webkit-will-change: transform;
+            }
+
+            .gift img {
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+            }
+        }
+
+        /* تحسينات الأداء للفيديو */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 120vh;
+            background: url('img2/1012949.png') center center;
+            background-size: cover;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+
+        .intro-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
     </style>
 
@@ -703,6 +912,11 @@
     </div>
     <div class="one">
         <img src="img/fc.jpg" class="img1" alt="">
+        <!-- Scroll Instruction -->
+        <div class="scroll-instruction" id="scrollInstruction">
+            <span class="word1">انزل</span> <span class="word2">إلى</span> <span class="word3">الأسفل</span> <span
+                class="arrow">↓</span>
+        </div>
         <!-- Gifts will be added here dynamically -->
     </div>
     <div class="li">
@@ -717,7 +931,27 @@
         </div>
 
         <script>
-            // Sound effects for gifts
+            // Preload critical images for better performance
+            const preloadImages = [
+                'img/fc.jpg',
+                'img/نهائي 2.jpg',
+                'img/sheep.png',
+                'img/bee.png',
+                'img/chick_final-removebg-preview.png',
+                'img/doncky.png',
+                'img/dog.png',
+                'img/gift-removebg-preview.png',
+                'img/cherry-removebg-preview.png',
+                'img/blackgift.png'
+            ];
+
+            // Preload images
+            preloadImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+
+            // Sound effects for gifts - with error handling
             const sounds = {
                 gift1: new Audio('audio/sheap.mp3'),
                 gift2: new Audio('audio/bee audio.mp3'),
@@ -730,9 +964,15 @@
                 gift9: new Audio('audio/sheap.mp3'),
                 gift10: new Audio('audio/bee audio.mp3'),
                 gift11: new Audio('audio/chicken.mp3'),
-                gift12: new Audio('audio/error.psd.mp3'),
-                gift13: new Audio('audio/error.psd.mp3'),
+                gift12: new Audio('audio/error-call-to-attention-129258.mp3'),
+                gift13: new Audio('audio/error-call-to-attention-129258.mp3'),
             };
+
+            // Preload audio files for better performance
+            Object.values(sounds).forEach(audio => {
+                audio.load();
+                audio.volume = 0.7; // Set volume for better experience
+            });
 
             // Popup images for gifts
             const images = {
@@ -743,17 +983,18 @@
                 gift5: 'treats/istockphoto-2155253329-612x612-removebg-preview.png',
                 gift6: 'img/cherry-removebg-preview.png',
                 gift7: 'img/coin.png',
-                gift8: 'img2/error 1.jpg',
+                gift8: 'img2/error 3 copy عربي.jpg',
                 gift9: 'img/cherry-removebg-preview.png',
                 gift10: 'treats/images-removebg-preview (1).png',
                 gift11: 'treats/images-removebg-preview.png',
-                gift12: 'img2/error 2.jpg',
-                gift13: 'img2/error 3.jpg',
+                gift12: 'img2/error 3 copy عربي 2.jpg',
+                gift13: 'img2/error 3 copyعربي 3.jpg',
             };
 
             let currentGift = null;
             const popup = document.getElementById('popup');
             const popupImg = document.getElementById('popup-img');
+            let imageCount = 0;
 
             // Gift positions (percentage from top and left)
             const giftPositions = [
@@ -776,16 +1017,25 @@
                 const gift = event.currentTarget;
                 const giftClass = gift.className.split(' ')[1];
 
+                // Add active class for scale effect
+                gift.classList.add('active');
+                setTimeout(() => {
+                    gift.classList.remove('active');
+                }, 1000);
+
                 if (giftClass) {
                     currentGift = giftClass;
                     console.log('Clicked gift:', giftClass);
 
-                    // Play sound
+                    // Play sound with error handling
                     const sound = sounds[giftClass];
                     if (sound) {
                         console.log('Playing sound for:', giftClass);
                         sound.currentTime = 0;
-                        sound.play().catch(error => console.error('Error playing sound:', error));
+                        sound.play().catch(error => {
+                            console.error('Error playing sound:', error);
+                            // Continue without sound if there's an error
+                        });
                     }
 
                     // Load popup image
@@ -801,14 +1051,14 @@
                         popupImg.style.height = 'auto';
                         popup.classList.add('active');
                         popupImg.classList.remove('animate', 'animate-long');
-                        void popupImg.offsetWidth;
+                        void popupImg.offsetWidth; // Force reflow
                         popupImg.classList.add('animate-long');
                     } else {
                         popupImg.style.width = '100%';
                         popupImg.style.height = 'auto';
                         popup.classList.add('active');
                         popupImg.classList.remove('animate', 'animate-long');
-                        void popupImg.offsetWidth;
+                        void popupImg.offsetWidth; // Force reflow
                         popupImg.classList.add('animate');
                         setTimeout(() => {
                             closePopup();
@@ -845,6 +1095,8 @@
                 const giftImg = document.createElement('img');
                 giftImg.src = gift.src;
                 giftImg.alt = 'Gift';
+                giftImg.loading = 'lazy'; // Lazy loading for better performance
+                giftImg.decoding = 'async'; // Async decoding for better performance
                 giftElement.appendChild(giftImg);
 
                 // Add click event listener
@@ -897,10 +1149,6 @@
                 });
             }
 
-            // Add gifts to first image (not loop gifts)
-            const firstImageContainer = document.querySelector('.one');
-            addGiftsToContainer(firstImageContainer, false);
-
             function createImageWithGifts() {
                 const imageWrapper = document.createElement('div');
                 imageWrapper.className = 'image-wrapper';
@@ -908,6 +1156,8 @@
                 const img = document.createElement('img');
                 img.src = 'img/نهائي 2.jpg';
                 img.className = 'img2';
+                img.loading = 'lazy'; // Lazy loading for better performance
+                img.decoding = 'async'; // Async decoding for better performance
                 imageWrapper.appendChild(img);
 
                 // Add gifts to this image (loop gifts)
@@ -916,32 +1166,64 @@
                 return imageWrapper;
             }
 
-            // Add initial images
-            for (let i = 0; i < 2; i++) {
-                scrollContainer.appendChild(createImageWithGifts());
-            }
+            // Initialize everything after DOM is loaded
+            function initializeGame() {
+                console.log('Initializing game...');
 
-            function checkAndAddImage() {
-                const scrollBottom = window.scrollY + window.innerHeight;
-                const documentHeight = document.documentElement.scrollHeight;
-
-                // If we're near the bottom, add another image
-                if (scrollBottom >= documentHeight - 100) {
-                    scrollContainer.appendChild(createImageWithGifts());
-                    imageCount++;
+                // Add gifts to first image (not loop gifts)
+                const firstImageContainer = document.querySelector('.one');
+                if (firstImageContainer) {
+                    addGiftsToContainer(firstImageContainer, false);
+                    console.log('Added gifts to first image');
                 }
+
+                // Add initial images
+                const scrollContainer = document.getElementById('scrollContainer');
+                if (scrollContainer) {
+                    for (let i = 0; i < 2; i++) {
+                        scrollContainer.appendChild(createImageWithGifts());
+                    }
+                    console.log('Added initial images');
+                }
+
+                // Throttled scroll handler for better performance
+                let scrollTimeout;
+                function checkAndAddImage() {
+                    const scrollBottom = window.scrollY + window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight;
+
+                    // If we're near the bottom, add another image
+                    if (scrollBottom >= documentHeight - 100) {
+                        if (scrollContainer) {
+                            scrollContainer.appendChild(createImageWithGifts());
+                            imageCount++;
+                        }
+                    }
+                }
+
+                // Throttled scroll event listener
+                window.addEventListener('scroll', () => {
+                    if (scrollTimeout) return;
+                    scrollTimeout = setTimeout(() => {
+                        checkAndAddImage();
+                        scrollTimeout = null;
+                    }, 100);
+                });
+
+                // Initial check
+                checkAndAddImage();
+
+                console.log('Game initialized successfully');
             }
 
-            // Listen for scroll events
-            window.addEventListener('scroll', checkAndAddImage);
+            // Wait for DOM to be fully loaded
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeGame);
+            } else {
+                initializeGame();
+            }
 
-            // Initial check
-            checkAndAddImage();
-
-            // Debug: Log all gift elements to verify they exist
-            console.log('All gift elements:', document.querySelectorAll('.gift'));
-
-            // نظام الفيديو التفاعلي - أبسط وأكثر موثوقية
+            // نظام الفيديو التفاعلي - محسن للأداء
             document.addEventListener('DOMContentLoaded', function () {
                 const videoOverlay = document.getElementById('videoOverlay');
                 const startPopup = document.getElementById('startPopup');
@@ -953,14 +1235,16 @@
                 console.log('تم تحميل الصفحة');
                 console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, endPopup, endBtn });
 
-                // زر ابدأ الأول - إزالة جميع event listeners السابقة
+                // Preload video for better performance
+                if (introVideo) {
+                    introVideo.load();
+                    introVideo.muted = true; // Start muted for better performance
+                }
+
+                // زر ابدأ الأول
                 if (startBtn) {
                     console.log('زر ابدأ موجود');
-                    // إزالة جميع event listeners السابقة
-                    startBtn.replaceWith(startBtn.cloneNode(true));
-                    const newStartBtn = document.getElementById('startBtn');
-
-                    newStartBtn.addEventListener('click', function (e) {
+                    startBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         console.log('تم الضغط على ابدأ');
@@ -992,14 +1276,10 @@
                     });
                 }
 
-                // زر ابدأ اللعبة - إزالة جميع event listeners السابقة
+                // زر ابدأ اللعبة
                 if (endBtn) {
                     console.log('زر ابدأ اللعبة موجود');
-                    // إزالة جميع event listeners السابقة
-                    endBtn.replaceWith(endBtn.cloneNode(true));
-                    const newEndBtn = document.getElementById('endBtn');
-
-                    newEndBtn.addEventListener('click', function (e) {
+                    endBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         console.log('تم الضغط على ابدأ اللعبة');
@@ -1008,11 +1288,6 @@
                 } else {
                     console.log('زر ابدأ اللعبة مش موجود!');
                 }
-
-                // اختبار سريع - اضغط على أي مكان في الصفحة
-                document.addEventListener('click', function (e) {
-                    console.log('تم الضغط في:', e.target);
-                });
             });
         </script>
     </div>
