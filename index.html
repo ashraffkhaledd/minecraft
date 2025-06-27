@@ -738,13 +738,9 @@
             <button id="startBtn"
                 style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
-        <video class="intro-video" id="introVideo" src="video/البداية بالطول_1.mp4" playsinline muted
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"
-            onerror="this.style.display='none';document.getElementById('videoError').style.display='block';console.log('فشل تحميل الفيديو');">
-        </video>
+        <video class="intro-video" id="introVideo" src="video/البداية بالطول_2.mp4" playsinline
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
     </div>
-    <div id="videoError" style="display:none;color:red;text-align:center;font-size:22px;margin-top:40px;">تعذر تحميل
-        الفيديو. تأكد من اتصالك أو جرب متصفح آخر.</div>
     <div class="one">
         <img src="img/full نهائي (1).jpg" class="img1" alt="">
         <!-- Scroll Instruction -->
@@ -1127,18 +1123,9 @@
                         console.log('انتهى الفيديو');
                         videoOverlay.style.display = 'none';
                         setTimeout(function () {
-                            minecraftMusic.play().catch(() => {
-                                alert('يرجى الضغط في أي مكان لتشغيل الموسيقى');
-                                // Enable music on next user interaction
-                                const enableMusic = () => {
-                                    minecraftMusic.play();
-                                    document.removeEventListener('click', enableMusic);
-                                    document.removeEventListener('touchstart', enableMusic);
-                                };
-                                document.addEventListener('click', enableMusic);
-                                document.addEventListener('touchstart', enableMusic);
-                            });
-                        }, 100);
+                            minecraftMusic.currentTime = 0;
+                            minecraftMusic.play().catch(() => { });
+                        }, 100); // slight delay to ensure overlay is hidden
                     });
                 }
             });
@@ -1147,32 +1134,18 @@
             const gameStartSound = new Audio('audio/game-start-6104.mp3');
             gameStartSound.load();
 
-            // Preload Minecraft soundtrack
-            const minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
-            minecraftMusic.loop = true;
-            minecraftMusic.load();
-
-            // Add event listener to play sound and music on start button click
+            // Add event listener to play sound on start button click
+            const startBtn = document.getElementById('startBtn');
             if (startBtn) {
                 startBtn.addEventListener('click', function () {
                     gameStartSound.currentTime = 0;
                     gameStartSound.play().catch(() => { });
-                    minecraftMusic.currentTime = 0;
-                    minecraftMusic.play().catch(() => { });
                 });
             }
 
-            if (introVideo) {
-                startBtn && startBtn.addEventListener('click', function () {
-                    minecraftMusic.pause();
-                });
-                introVideo.addEventListener('ended', function () {
-                    videoOverlay.style.display = 'none';
-                    setTimeout(function () {
-                        minecraftMusic.play().catch(() => { });
-                    }, 100);
-                });
-            }
+            // Preload Minecraft soundtrack
+            const minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
+            minecraftMusic.load();
         </script>
     </div>
 </body>
