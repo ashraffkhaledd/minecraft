@@ -223,13 +223,13 @@
         }
 
         .gift12 {
-            top: 93%;
-            left: 20%;
+            top: 35%;
+            left: 80%;
         }
 
         .gift13 {
-            top: 78.3%;
-            left: 18%;
+            top: 85%;
+            left: 70%;
         }
 
         /* Responsive adjustments for different screen sizes */
@@ -316,8 +316,18 @@
             }
 
             .gift8 {
-                top: 65.5%;
-                left: 26%;
+                top: 55%;
+                left: 75%;
+            }
+
+            .gift12 {
+                top: 35%;
+                left: 80%;
+            }
+
+            .gift13 {
+                top: 85%;
+                left: 70%;
             }
         }
 
@@ -358,8 +368,18 @@
             }
 
             .gift8 {
-                top: 65.5%;
-                left: 22%;
+                top: 55%;
+                left: 75%;
+            }
+
+            .gift12 {
+                top: 35%;
+                left: 80%;
+            }
+
+            .gift13 {
+                top: 85%;
+                left: 70%;
             }
         }
 
@@ -469,13 +489,13 @@
         }
 
         .gift12 {
-            top: 93%;
-            left: 20%;
+            top: 35%;
+            left: 74%;
         }
 
         .gift13 {
-            top: 78.3%;
-            left: 18%;
+            top: 85%;
+            left: 70%;
         }
 
         @keyframes buttonGlow {
@@ -575,7 +595,7 @@
             background: url('img2/1012949.png') center center;
             background-size: cover;
             z-index: 3000;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             will-change: transform;
@@ -599,8 +619,8 @@
 </head>
 
 <body>
-    <!-- <div class="video-overlay" id="videoOverlay"
-        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
+    <div class="video-overlay" id="videoOverlay"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: none; align-items: center; justify-content: center;">
         <div class="start-popup" id="startPopup"
             style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
             <button id="startBtn"
@@ -618,7 +638,7 @@
                     اللعبة</button>
             </div>
         </div>
-    </div> -->
+    </div>
     <div class="one">
         <img src="img/fc.jpg" class="img1" alt="">
         <!-- Scroll Instruction -->
@@ -640,9 +660,22 @@
         </div>
 
         <script>
+            // Preload the first image to ensure it's fully loaded
+            const firstImage = new Image();
+            firstImage.onload = function () {
+                console.log('First image loaded successfully');
+                // Initialize the game only after first image is loaded
+                initializeGame();
+            };
+            firstImage.onerror = function () {
+                console.error('Failed to load first image');
+                // Still initialize the game even if image fails
+                initializeGame();
+            };
+            firstImage.src = 'img/fc.jpg';
+
             // Preload critical images for better performance
             const preloadImages = [
-                'img/fc.jpg',
                 'img/نهائي 2.jpg',
                 'img/sheep.png',
                 'img/bee.png',
@@ -741,6 +774,14 @@
                     if (sound) {
                         console.log('Playing sound for:', giftClass);
                         sound.currentTime = 0;
+
+                        // Set higher volume for gifts 8, 12, and 13
+                        if (giftClass === 'gift8' || giftClass === 'gift12' || giftClass === 'gift13') {
+                            sound.volume = 1.0; // Maximum volume for these gifts
+                        } else {
+                            sound.volume = 0.7; // Normal volume for other gifts
+                        }
+
                         sound.play().catch(error => {
                             console.error('Error playing sound:', error);
                             // Continue without sound if there's an error
@@ -759,9 +800,9 @@
                         popupImg.style.width = '70vw';
                         popupImg.style.height = 'auto';
                         popup.classList.add('active');
+                        // Remove animation classes for persistent popup
                         popupImg.classList.remove('animate', 'animate-long');
-                        void popupImg.offsetWidth; // Force reflow
-                        popupImg.classList.add('animate-long');
+                        // No auto-close timeout for these gifts - they stay until clicked
                     } else {
                         popupImg.style.width = '100%';
                         popupImg.style.height = 'auto';
@@ -925,11 +966,13 @@
                 console.log('Game initialized successfully');
             }
 
-            // Wait for DOM to be fully loaded
+            // Wait for DOM to be fully loaded and first image to be loaded
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initializeGame);
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Game will be initialized after first image loads
+                });
             } else {
-                initializeGame();
+                // DOM is already loaded, first image loading will trigger game initialization
             }
 
             // نظام الفيديو التفاعلي - محسن للأداء
