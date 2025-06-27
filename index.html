@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" as="image" href="img/full نهائي (1).jpg">
+    <link rel="preload" as="video" href="video/البداية بالطول_1.mp4">
     <style>
         Reset * {
             margin: 0;
@@ -521,7 +523,7 @@
             left: 50%;
             transform: translateX(-50%);
             color: white;
-            font-size: 42px;
+            font-size: clamp(22px, 5vw, 44px);
             font-weight: bold;
             font-family: 'Handjet', cursive;
             text-align: center;
@@ -532,6 +534,7 @@
             text-rendering: optimizeLegibility;
             text-shadow: 4px 8px 16px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.7);
             -webkit-text-shadow: 4px 8px 16px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.7);
+            white-space: nowrap;
         }
 
         .scroll-instruction span {
@@ -718,31 +721,28 @@
                 transform: rotate(120deg) scale(1.2);
             }
         }
+
+        #startBtn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #b85c00;
+            box-shadow: 0 8px 40px 0 rgba(255, 193, 7, 0.35), 0 0 0 6px #fffbe6;
+            transform: scale(1.07) rotate(-1deg);
+        }
     </style>
 
 </head>
 
 <body>
-    <!-- <div class="video-overlay" id="videoOverlay"
-        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
+    <div class="video-overlay" id="videoOverlay"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/الغلاف.jpg') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
         <div class="start-popup" id="startPopup"
-            style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
+            style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; position: absolute; top: 480px; right: 170px;">
             <button id="startBtn"
-                style="font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665);  animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
+                style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
-        <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
-            playsinline
+        <video class="intro-video" id="introVideo" src="video/البداية بالطول_1.mp4" playsinline
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
-        <div class="end-popup" id="endPopup"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
-            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
-                <div style="margin-bottom: 20px;">جاهز للبدء؟</div>
-                <button id="endBtn"
-                    style="font-size: 24px; padding: 15px 30px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">ابدأ
-                    اللعبة</button>
-            </div>
-        </div>
-    </div> -->
+    </div>
     <div class="one">
         <img src="img/full نهائي (1).jpg" class="img1" alt="">
         <!-- Scroll Instruction -->
@@ -935,6 +935,7 @@
                 giftImg.alt = 'Gift';
                 giftImg.loading = 'lazy'; // Lazy loading for better performance
                 giftImg.decoding = 'async'; // Async decoding for better performance
+                giftImg.onerror = function () { this.src = 'img/placeholder.png'; };
                 giftElement.appendChild(giftImg);
 
                 // Add animated arrows only for the first gift1
@@ -1084,11 +1085,9 @@
                 const startPopup = document.getElementById('startPopup');
                 const startBtn = document.getElementById('startBtn');
                 const introVideo = document.getElementById('introVideo');
-                const endPopup = document.getElementById('endPopup');
-                const endBtn = document.getElementById('endBtn');
 
                 console.log('تم تحميل الصفحة');
-                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, endPopup, endBtn });
+                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo });
 
                 // Preload video for better performance
                 if (introVideo) {
@@ -1113,8 +1112,7 @@
                             console.log('خطأ في الفيديو:', error);
                             // إذا فشل الفيديو، اعرض الـ popup التالي
                             setTimeout(function () {
-                                endPopup.style.opacity = '1';
-                                endPopup.style.pointerEvents = 'all';
+                                videoOverlay.style.display = 'none';
                             }, 2000);
                         });
                     });
@@ -1126,24 +1124,45 @@
                 if (introVideo) {
                     introVideo.addEventListener('ended', function () {
                         console.log('انتهى الفيديو');
-                        endPopup.style.opacity = '1';
-                        endPopup.style.pointerEvents = 'all';
-                    });
-                }
-
-                // زر ابدأ اللعبة
-                if (endBtn) {
-                    console.log('زر ابدأ اللعبة موجود');
-                    endBtn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log('تم الضغط على ابدأ اللعبة');
                         videoOverlay.style.display = 'none';
+                        setTimeout(function () {
+                            minecraftMusic.currentTime = 0;
+                            minecraftMusic.play().catch(() => { });
+                        }, 100); // slight delay to ensure overlay is hidden
                     });
-                } else {
-                    console.log('زر ابدأ اللعبة مش موجود!');
                 }
             });
+
+            // Preload game start sound
+            const gameStartSound = new Audio('audio/game-start-6104.mp3');
+            gameStartSound.load();
+
+            // Preload Minecraft soundtrack
+            const minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
+            minecraftMusic.loop = true;
+            minecraftMusic.load();
+
+            // Add event listener to play sound and music on start button click
+            if (startBtn) {
+                startBtn.addEventListener('click', function () {
+                    gameStartSound.currentTime = 0;
+                    gameStartSound.play().catch(() => { });
+                    minecraftMusic.currentTime = 0;
+                    minecraftMusic.play().catch(() => { });
+                });
+            }
+
+            if (introVideo) {
+                startBtn && startBtn.addEventListener('click', function () {
+                    minecraftMusic.pause();
+                });
+                introVideo.addEventListener('ended', function () {
+                    videoOverlay.style.display = 'none';
+                    setTimeout(function () {
+                        minecraftMusic.play().catch(() => { });
+                    }, 100);
+                });
+            }
         </script>
     </div>
 </body>
