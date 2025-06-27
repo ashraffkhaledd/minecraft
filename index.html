@@ -517,7 +517,7 @@
         /* Scroll Instruction Animation */
         .scroll-instruction {
             position: absolute;
-            top: 1266px;
+            top: 573px;
             left: 50%;
             transform: translateX(-50%);
             color: white;
@@ -555,7 +555,7 @@
             display: inline-block;
             margin-left: 20px;
             font-size: 40px;
-            animation: arrowBounce 1.5s ease-in-out infinite;
+            animation: arrowScaleBounce 1.5s ease-in-out infinite;
             color: white;
             text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
             -webkit-text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
@@ -573,15 +573,15 @@
             }
         }
 
-        @keyframes arrowBounce {
+        @keyframes arrowScaleBounce {
 
             0%,
             100% {
-                transform: translateY(0);
+                transform: scale(1);
             }
 
             50% {
-                transform: translateY(8px);
+                transform: scale(1.4);
             }
         }
 
@@ -627,36 +627,96 @@
             pointer-events: none;
             z-index: 20;
             transform: translate(-50%, -50%);
+            animation: rotate-arrows 2.5s linear infinite;
         }
 
         .gift1-arrow {
             position: absolute;
-            font-size: 60px;
-            color: white;
-            text-shadow: 3px 3px 12px #ff0000, 0 0 20px #ff0000;
-            animation: arrowBounce 1.5s ease-in-out infinite;
-            -webkit-text-shadow: 3px 3px 12px #ff0000, 0 0 20px #ff0000;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Remove animation for static arrows */
         }
 
-        .gift1-arrow.arrow-top-left {
-            left: 0%;
-            top: -40px;
-            transform: rotate(25deg);
+        .gift1-arrow::before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 28px solid #fff;
+            filter: drop-shadow(0 0 8px #ff0000) drop-shadow(0 0 12px #ff0000);
+        }
+
+        .gift1-arrow.arrow-top {
+            left: 50%;
+            top: -28px;
+            animation: arrowBounceTop 1.5s ease-in-out infinite;
             animation-delay: 0s;
         }
 
-        .gift1-arrow.arrow-top-right {
-            right: 0%;
-            top: -40px;
-            transform: rotate(-25deg);
+        .gift1-arrow.arrow-bottom-left {
+            left: -18px;
+            bottom: 10px;
+            animation: arrowBounceBL 1.5s ease-in-out infinite;
             animation-delay: 0.3s;
         }
 
-        .gift1-arrow.arrow-bottom {
-            left: 44%;
-            bottom: -40px;
-            transform: translateX(-50%) rotate(180deg);
-            animation-delay: 0.6s;
+        .gift1-arrow.arrow-top {
+            left: 50%;
+            top: -28px;
+            animation: arrowBounceTop 1.5s ease-in-out infinite;
+        }
+
+        .gift1-arrow.arrow-bottom-left {
+            left: -18px;
+            bottom: 10px;
+            animation: arrowBounceBL 1.5s ease-in-out infinite;
+        }
+
+        .gift1-arrow.arrow-bottom-right {
+            right: -18px;
+            bottom: 10px;
+            animation: arrowBounceBR 1.5s ease-in-out infinite;
+        }
+
+        @keyframes arrowBounceTop {
+
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(0deg) scale(1.2);
+            }
+        }
+
+        @keyframes arrowBounceBL {
+
+            0%,
+            100% {
+                transform: rotate(-120deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(-120deg) scale(1.2);
+            }
+        }
+
+        @keyframes arrowBounceBR {
+
+            0%,
+            100% {
+                transform: rotate(120deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(120deg) scale(1.2);
+            }
         }
     </style>
 
@@ -882,9 +942,9 @@
                     const arrows = document.createElement('div');
                     arrows.className = 'gift1-arrows';
                     arrows.innerHTML = `
-                        <span class="gift1-arrow arrow-top-left">↘</span>
-                        <span class="gift1-arrow arrow-top-right">↙</span>
-                        <span class="gift1-arrow arrow-bottom">↑</span>
+                        <span class="gift1-arrow arrow-top"></span>
+                        <span class="gift1-arrow arrow-bottom-left"></span>
+                        <span class="gift1-arrow arrow-bottom-right"></span>
                     `;
                     giftElement.appendChild(arrows);
                 }
