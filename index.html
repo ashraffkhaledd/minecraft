@@ -1125,19 +1125,6 @@
                     });
                 }
             });
-
-            // Preload game start sound
-            const gameStartSound = new Audio('audio/game-start-6104.mp3');
-            gameStartSound.load();
-
-            // Add event listener to play sound on start button click
-            const startBtn = document.getElementById('startBtn');
-            if (startBtn) {
-                startBtn.addEventListener('click', function () {
-                    gameStartSound.currentTime = 0;
-                    gameStartSound.play().catch(() => { });
-                });
-            }
         </script>
     </div>
 </body>
