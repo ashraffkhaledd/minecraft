@@ -521,7 +521,9 @@
             left: 50%;
             transform: translateX(-50%);
             color: white;
-            font-size: clamp(22px, 5vw, 44px);
+            font-size: clamp(22px, 5vw, 40px);
+            /* Reduced size */
+            /* Increased size */
             font-weight: bold;
             font-family: 'Handjet', cursive;
             text-align: center;
@@ -545,17 +547,31 @@
         }
 
         .scroll-instruction .word2 {
-            animation-delay: 0.3s;
+            animation-delay: 0.2s;
         }
 
         .scroll-instruction .word3 {
+            animation-delay: 0.4s;
+        }
+
+        .scroll-instruction .word4 {
             animation-delay: 0.6s;
+        }
+
+        .scroll-instruction .word5 {
+            animation-delay: 0.8s;
+        }
+
+        .scroll-instruction .word6 {
+            animation-delay: 1s;
         }
 
         .scroll-instruction .arrow {
             display: inline-block;
             margin-left: 20px;
-            font-size: 40px;
+            font-size: 44px;
+            /* Reduced arrow size */
+            /* Increased arrow size */
             animation: arrowScaleBounce 1.5s ease-in-out infinite;
             color: white;
             text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
@@ -771,6 +787,7 @@
         <!-- Scroll Instruction -->
         <div class="scroll-instruction" id="scrollInstruction">
             <span class="word1">انزل</span> <span class="word2">إلى</span> <span class="word3">الأسفل</span> <span
+                class="word4">لتصل</span> <span class="word5">إلى</span> <span class="word6">الأرض</span> <span
                 class="arrow">↓</span>
         </div>
         <!-- Gifts will be added here dynamically -->
