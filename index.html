@@ -149,14 +149,27 @@
             }
         }
 
-
+        /* All gifts have the same simple white shadow - no animations */
+        .gift1,
+        .gift2,
+        .gift3,
+        .gift4,
+        .gift5,
+        .gift6,
+        .gift7,
+        .gift8,
+        .gift9,
+        .gift10,
+        .gift11,
+        .gift12,
+        .gift13 {
+            /* No individual animations - all use the default white shadow */
+        }
 
         /* Gift positions using percentages */
         .gift1 {
             top: 12.2%;
             left: 18%;
-            width: 230px !important;
-            height: 230px !important;
         }
 
         .gift2 {
@@ -221,11 +234,6 @@
 
         /* Responsive adjustments for different screen sizes */
         @media (min-width: 1200px) {
-            .gift1 {
-                width: 260px !important;
-                height: 260px !important;
-            }
-
             .gift {
                 width: clamp(75px, 6vw, 105px);
                 height: clamp(75px, 6vw, 105px);
@@ -241,11 +249,6 @@
         }
 
         @media (max-width: 768px) {
-            .gift1 {
-                width: 160px !important;
-                height: 160px !important;
-            }
-
             .gift {
                 width: clamp(52px, 9vw, 75px);
                 height: clamp(52px, 9vw, 75px);
@@ -261,11 +264,6 @@
         }
 
         @media (max-width: 480px) {
-            .gift1 {
-                width: 120px !important;
-                height: 120px !important;
-            }
-
             .gift {
                 width: clamp(45px, 12vw, 60px);
                 height: clamp(45px, 12vw, 60px);
@@ -517,21 +515,21 @@
         /* Scroll Instruction Animation */
         .scroll-instruction {
             position: absolute;
-            top: 573px;
+            top: 80px;
             left: 50%;
             transform: translateX(-50%);
-            color: white;
+            color: #8B4513;
             font-size: 42px;
             font-weight: bold;
             font-family: 'Handjet', cursive;
             text-align: center;
             z-index: 1000;
+            text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            -webkit-text-shadow: 3px 3px 6px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
             direction: rtl;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
-            text-shadow: 4px 8px 16px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.7);
-            -webkit-text-shadow: 4px 8px 16px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.7);
         }
 
         .scroll-instruction span {
@@ -555,7 +553,7 @@
             display: inline-block;
             margin-left: 20px;
             font-size: 40px;
-            animation: arrowScaleBounce 1.5s ease-in-out infinite;
+            animation: arrowBounce 1.5s ease-in-out infinite;
             color: white;
             text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
             -webkit-text-shadow: 3px 3px 6px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 0, 0, 0.6);
@@ -573,15 +571,15 @@
             }
         }
 
-        @keyframes arrowScaleBounce {
+        @keyframes arrowBounce {
 
             0%,
             100% {
-                transform: scale(1);
+                transform: translateY(0);
             }
 
             50% {
-                transform: scale(1.4);
+                transform: translateY(8px);
             }
         }
 
@@ -616,124 +614,21 @@
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
         }
-
-        /* Arrows around gift1 */
-        .gift1-arrows {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 20;
-            transform: translate(-50%, -50%);
-            animation: rotate-arrows 2.5s linear infinite;
-        }
-
-        .gift1-arrow {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* Remove animation for static arrows */
-        }
-
-        .gift1-arrow::before {
-            content: '';
-            display: block;
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 28px solid #fff;
-            filter: drop-shadow(0 0 8px #ff0000) drop-shadow(0 0 12px #ff0000);
-        }
-
-        .gift1-arrow.arrow-top {
-            left: 50%;
-            top: -28px;
-            animation: arrowBounceTop 1.5s ease-in-out infinite;
-            animation-delay: 0s;
-        }
-
-        .gift1-arrow.arrow-bottom-left {
-            left: -18px;
-            bottom: 10px;
-            animation: arrowBounceBL 1.5s ease-in-out infinite;
-            animation-delay: 0.3s;
-        }
-
-        .gift1-arrow.arrow-top {
-            left: 50%;
-            top: -28px;
-            animation: arrowBounceTop 1.5s ease-in-out infinite;
-        }
-
-        .gift1-arrow.arrow-bottom-left {
-            left: -18px;
-            bottom: 10px;
-            animation: arrowBounceBL 1.5s ease-in-out infinite;
-        }
-
-        .gift1-arrow.arrow-bottom-right {
-            right: -18px;
-            bottom: 10px;
-            animation: arrowBounceBR 1.5s ease-in-out infinite;
-        }
-
-        @keyframes arrowBounceTop {
-
-            0%,
-            100% {
-                transform: translateX(-50%) rotate(0deg) scale(1);
-            }
-
-            50% {
-                transform: translateX(-50%) rotate(0deg) scale(1.2);
-            }
-        }
-
-        @keyframes arrowBounceBL {
-
-            0%,
-            100% {
-                transform: rotate(-120deg) scale(1);
-            }
-
-            50% {
-                transform: rotate(-120deg) scale(1.2);
-            }
-        }
-
-        @keyframes arrowBounceBR {
-
-            0%,
-            100% {
-                transform: rotate(120deg) scale(1);
-            }
-
-            50% {
-                transform: rotate(120deg) scale(1.2);
-            }
-        }
     </style>
 
 </head>
 
 <body>
     <div class="video-overlay" id="videoOverlay"
-        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/الغلاف.jpg') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/1012949.png') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
         <div class="start-popup" id="startPopup"
             style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; margin-top: 400px;">
             <button id="startBtn"
                 style="font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665);  animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
-        <video class="intro-video" id="introVideo" src="video/v.mp4" playsinline muted
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
-            متصفحك لا يدعم تشغيل الفيديو.
-        </video>
+        <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
+            playsinline
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
         <div class="end-popup" id="endPopup"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;">
             <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
@@ -745,7 +640,7 @@
         </div>
     </div>
     <div class="one">
-        <img src="img/full نهائي (1).jpg" class="img1" alt="">
+        <img src="img/fc.jpg" class="img1" alt="">
         <!-- Scroll Instruction -->
         <div class="scroll-instruction" id="scrollInstruction">
             <span class="word1">انزل</span> <span class="word2">إلى</span> <span class="word3">الأسفل</span> <span
@@ -938,18 +833,6 @@
                 giftImg.decoding = 'async'; // Async decoding for better performance
                 giftElement.appendChild(giftImg);
 
-                // Add animated arrows only for the first gift1
-                if (gift.class === 'gift1') {
-                    const arrows = document.createElement('div');
-                    arrows.className = 'gift1-arrows';
-                    arrows.innerHTML = `
-                        <span class="gift1-arrow arrow-top"></span>
-                        <span class="gift1-arrow arrow-bottom-left"></span>
-                        <span class="gift1-arrow arrow-bottom-right"></span>
-                    `;
-                    giftElement.appendChild(arrows);
-                }
-
                 // Add click event listener
                 giftElement.addEventListener('click', handleGiftClick);
 
@@ -994,13 +877,8 @@
                 return giftElement;
             }
 
-            function addGiftsToContainer(container, isLoopGift = false, skipGift12 = false) {
-                let usedGift12 = false;
+            function addGiftsToContainer(container, isLoopGift = false) {
                 giftPositions.forEach(gift => {
-                    if (skipGift12 && gift.class === 'gift12' && !usedGift12) {
-                        usedGift12 = true;
-                        return; // Skip the first gift12 only
-                    }
                     container.appendChild(createGift(gift, isLoopGift));
                 });
             }
@@ -1026,11 +904,11 @@
             function initializeGame() {
                 console.log('Initializing game...');
 
-                // Add gifts to first image (not loop gifts), but skip first gift12
+                // Add gifts to first image (not loop gifts)
                 const firstImageContainer = document.querySelector('.one');
                 if (firstImageContainer) {
-                    addGiftsToContainer(firstImageContainer, false, true);
-                    console.log('Added gifts to first image (skipping first gift12)');
+                    addGiftsToContainer(firstImageContainer, false);
+                    console.log('Added gifts to first image');
                 }
 
                 // Add initial images
@@ -1091,43 +969,58 @@
                 console.log('تم تحميل الصفحة');
                 console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, endPopup, endBtn });
 
+                // Preload video for better performance
                 if (introVideo) {
                     introVideo.load();
-                    introVideo.muted = true;
+                    introVideo.muted = true; // Start muted for better performance
                 }
 
+                // زر ابدأ الأول
                 if (startBtn) {
+                    console.log('زر ابدأ موجود');
                     startBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
+                        console.log('تم الضغط على ابدأ');
                         startPopup.style.display = 'none';
                         introVideo.style.display = 'block';
                         introVideo.muted = false;
+                        console.log('محاولة تشغيل الفيديو');
                         introVideo.play().then(function () {
-                            // نجح التشغيل
+                            console.log('الفيديو بدأ يشتغل');
                         }).catch(function (error) {
-                            alert('خطأ في تشغيل الفيديو: ' + error);
+                            console.log('خطأ في الفيديو:', error);
+                            // إذا فشل الفيديو، اعرض الـ popup التالي
                             setTimeout(function () {
                                 endPopup.style.opacity = '1';
                                 endPopup.style.pointerEvents = 'all';
                             }, 2000);
                         });
                     });
+                } else {
+                    console.log('زر ابدأ مش موجود!');
                 }
 
+                // عند انتهاء الفيديو
                 if (introVideo) {
                     introVideo.addEventListener('ended', function () {
+                        console.log('انتهى الفيديو');
                         endPopup.style.opacity = '1';
                         endPopup.style.pointerEvents = 'all';
                     });
                 }
 
+                // زر ابدأ اللعبة
                 if (endBtn) {
+                    console.log('زر ابدأ اللعبة موجود');
                     endBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
+                        console.log('تم الضغط على ابدأ اللعبة');
                         videoOverlay.style.display = 'none';
                     });
+                } else {
+                    console.log('زر ابدأ اللعبة مش موجود!');
                 }
             });
         </script>
