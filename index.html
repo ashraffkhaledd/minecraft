@@ -1161,9 +1161,32 @@
                 }
 
                 // عند انتهاء الفيديو
+                const minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
+                minecraftMusic.volume = 0.7;
+                let minecraftMusicTried = false;
+
+                function tryPlayMinecraftMusic() {
+                    if (!minecraftMusicTried) {
+                        minecraftMusicTried = true;
+                        minecraftMusic.currentTime = 0;
+                        minecraftMusic.play().catch(function (err) {
+                            console.warn('لم يتم تشغيل الصوت تلقائياً، في انتظار تفاعل المستخدم...', err);
+                            // إذا فشل التشغيل، انتظر أول تفاعل من المستخدم
+                            document.body.addEventListener('click', playMinecraftOnUser, { once: true });
+                            document.body.addEventListener('touchstart', playMinecraftOnUser, { once: true });
+                        });
+                    }
+                }
+                function playMinecraftOnUser() {
+                    minecraftMusic.currentTime = 0;
+                    minecraftMusic.play();
+                }
+
                 if (introVideo) {
                     introVideo.addEventListener('ended', function () {
                         console.log('انتهى الفيديو');
+                        // Play Minecraft soundtrack (with fallback)
+                        tryPlayMinecraftMusic();
                         fadeBlur.classList.add('active');
                         setTimeout(function () {
                             videoOverlay.style.opacity = '0';
