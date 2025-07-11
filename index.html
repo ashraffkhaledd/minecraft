@@ -778,8 +778,7 @@
             <button id="startBtn"
                 style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
-        <video class="intro-video" id="introVideo" src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
-            playsinline
+        <video class="intro-video" id="introVideo" preload="auto" src="video/minecraft_intro.mp4" playsinline
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
     </div>
     <div class="one">
@@ -1141,19 +1140,26 @@
                     startBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('تم الضغط على ابدأ');
+
                         startPopup.style.display = 'none';
-                        introVideo.style.display = 'block';
+
+                        // إعادة تحميل الفيديو بالصوت قبل التشغيل
+                        introVideo.pause();
+                        introVideo.currentTime = 0;
                         introVideo.muted = false;
-                        console.log('محاولة تشغيل الفيديو');
+
+                        // اجعل العنصر ظاهرًا قبل التشغيل
+                        introVideo.style.display = 'block';
+
+                        // حاول تشغيل الفيديو مع الصوت
                         introVideo.play().then(function () {
-                            console.log('الفيديو بدأ يشتغل');
+                            console.log('✅ الفيديو اشتغل بالصوت');
                         }).catch(function (error) {
-                            console.log('خطأ في الفيديو:', error);
-                            // إذا فشل الفيديو، اعرض الـ popup التالي
-                            setTimeout(function () {
-                                videoOverlay.style.display = 'none';
-                            }, 2000);
+                            console.warn('❌ تعذر تشغيل الفيديو بالصوت:', error);
+                            alert("تعذر تشغيل الفيديو بالصوت، اضغط مرة أخرى أو تحقق من إعدادات الصوت في المتصفح.");
+                            // كخطة بديلة: شغل الفيديو ميوت
+                            introVideo.muted = true;
+                            introVideo.play();
                         });
                     });
                 } else {
