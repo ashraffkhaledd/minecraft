@@ -1,1 +1,11 @@
 /* ملف CSS فارغ لحل مشكلة MIME type */
+.intro-video {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+.intro-video.show {
+  opacity: 1;
+}
+.intro-video.hide {
+  opacity: 0;
+}

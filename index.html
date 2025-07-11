@@ -1210,6 +1210,14 @@
                     });
                 }
             });
+
+            // بعد تعريف introVideo
+            window.addEventListener("load", () => {
+                const introVideo = document.getElementById("introVideo");
+                if (introVideo) {
+                    introVideo.classList.add("show");
+                }
+            });
         </script>
     </div>
 </body>
