@@ -780,6 +780,10 @@
         </div>
         <video class="intro-video" id="introVideo" preload="auto" src="video/minecraft_intro.mp4" playsinline
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <button id="enableSoundBtn"
+            style="position: absolute; bottom: 20px; right: 20px; z-index: 9999; padding: 10px 20px; font-size: 18px; display: none;">
+            تشغيل الصوت ��
+        </button>
     </div>
     <div class="one">
         <img src="img/full نهائي (1).jpg" class="img1" alt="">
@@ -1124,9 +1128,10 @@
                 const startBtn = document.getElementById('startBtn');
                 const introVideo = document.getElementById('introVideo');
                 const fadeBlur = document.getElementById('fadeBlur');
+                const enableSoundBtn = document.getElementById('enableSoundBtn');
 
                 console.log('تم تحميل الصفحة');
-                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur });
+                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur, enableSoundBtn });
 
                 // Preload video for better performance
                 if (introVideo) {
@@ -1140,26 +1145,12 @@
                     startBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-
                         startPopup.style.display = 'none';
-
-                        // إعادة تحميل الفيديو بالصوت قبل التشغيل
-                        introVideo.pause();
-                        introVideo.currentTime = 0;
-                        introVideo.muted = false;
-
-                        // اجعل العنصر ظاهرًا قبل التشغيل
                         introVideo.style.display = 'block';
-
-                        // حاول تشغيل الفيديو مع الصوت
-                        introVideo.play().then(function () {
-                            console.log('✅ الفيديو اشتغل بالصوت');
-                        }).catch(function (error) {
-                            console.warn('❌ تعذر تشغيل الفيديو بالصوت:', error);
-                            alert("تعذر تشغيل الفيديو بالصوت، اضغط مرة أخرى أو تحقق من إعدادات الصوت في المتصفح.");
-                            // كخطة بديلة: شغل الفيديو ميوت
-                            introVideo.muted = true;
-                            introVideo.play();
+                        introVideo.muted = true;
+                        introVideo.play().then(() => {
+                            console.log("✅ الفيديو بدأ ميوت");
+                            document.getElementById('enableSoundBtn').style.display = 'block';
                         });
                     });
                 } else {
@@ -1206,6 +1197,16 @@
                             fadeBlur.classList.remove('active');
                             videoOverlay.style.opacity = '1';
                         }, 1900);
+                    });
+                }
+
+                if (enableSoundBtn) {
+                    enableSoundBtn.addEventListener('click', () => {
+                        introVideo.muted = false;
+                        introVideo.volume = 1.0;
+                        introVideo.currentTime = introVideo.currentTime;
+                        introVideo.play();
+                        enableSoundBtn.style.display = 'none';
                     });
                 }
             });
