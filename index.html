@@ -778,9 +778,13 @@
             <button id="startBtn"
                 style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
-        <video class="intro-video" id="introVideo"
-            src="video/v/Minecraft 1.21.5 - Singleplayer 2025-06-20 19-19-31_2.mp4" playsinline
-            style="width: 100%; height: 100%;"></video>
+        <video class="intro-video" id="introVideo" preload="auto"
+            src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4" playsinline
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <button id="enableSoundBtn"
+            style="position: absolute; bottom: 20px; right: 20px; z-index: 9999; padding: 10px 20px; font-size: 18px; display: none;">
+            تشغيل الصوت ��
+        </button>
     </div>
     <div class="one">
         <img src="img/full نهائي (1).jpg" class="img1" alt="">
@@ -1125,9 +1129,10 @@
                 const startBtn = document.getElementById('startBtn');
                 const introVideo = document.getElementById('introVideo');
                 const fadeBlur = document.getElementById('fadeBlur');
+                const enableSoundBtn = document.getElementById('enableSoundBtn');
 
                 console.log('تم تحميل الصفحة');
-                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur });
+                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur, enableSoundBtn });
 
                 // Preload video for better performance
                 if (introVideo) {
@@ -1141,19 +1146,12 @@
                     startBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('تم الضغط على ابدأ');
                         startPopup.style.display = 'none';
                         introVideo.style.display = 'block';
-                        introVideo.muted = false;
-                        console.log('محاولة تشغيل الفيديو');
-                        introVideo.play().then(function () {
-                            console.log('الفيديو بدأ يشتغل');
-                        }).catch(function (error) {
-                            console.log('خطأ في الفيديو:', error);
-                            // إذا فشل الفيديو، اعرض الـ popup التالي
-                            setTimeout(function () {
-                                videoOverlay.style.display = 'none';
-                            }, 2000);
+                        introVideo.muted = true;
+                        introVideo.play().then(() => {
+                            console.log("✅ الفيديو بدأ ميوت");
+                            document.getElementById('enableSoundBtn').style.display = 'block';
                         });
                     });
                 } else {
@@ -1201,6 +1199,24 @@
                             videoOverlay.style.opacity = '1';
                         }, 1900);
                     });
+                }
+
+                if (enableSoundBtn) {
+                    enableSoundBtn.addEventListener('click', () => {
+                        introVideo.muted = false;
+                        introVideo.volume = 1.0;
+                        introVideo.currentTime = introVideo.currentTime;
+                        introVideo.play();
+                        enableSoundBtn.style.display = 'none';
+                    });
+                }
+            });
+
+            // بعد تعريف introVideo
+            window.addEventListener("load", () => {
+                const introVideo = document.getElementById("introVideo");
+                if (introVideo) {
+                    introVideo.classList.add("show");
                 }
             });
         </script>
