@@ -810,8 +810,15 @@
             <button id="startBtn"
                 style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
-        <video class="intro-video" id="introVideo" src="video/minecraft_intro.mp4" playsinline
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <video class="intro-video" id="introVideo"
+            src="video/v/Minecraft_1_21_5_Singleplayer_2025_06_20_19_19_31_2_عريض_اكتر_1.mp4" playsinline
+            preload="metadata" muted
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
+            <source src="video/v/Minecraft_1_21_5_Singleplayer_2025_06_20_19_19_31_2_عريض_اكتر_1.mp4" type="video/mp4">
+            <source src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4" type="video/mp4">
+            <source src="video/البداية بالطول_10.mp4" type="video/mp4">
+            <p>متصفحك لا يدعم تشغيل الفيديو.</p>
+        </video>
     </div>
     <div class="one">
         <img src="img/full نهائي (1).jpg" class="img1" alt="">
@@ -1160,8 +1167,16 @@
                 console.log('تم تحميل الصفحة');
                 console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur });
 
-                // Preload video for better performance
+                // تحسين تحميل الفيديو
                 if (introVideo) {
+                    // إضافة event listeners للفيديو
+                    introVideo.addEventListener('loadstart', () => console.log('بدء تحميل الفيديو'));
+                    introVideo.addEventListener('loadedmetadata', () => console.log('تم تحميل metadata الفيديو'));
+                    introVideo.addEventListener('loadeddata', () => console.log('تم تحميل بيانات الفيديو'));
+                    introVideo.addEventListener('canplay', () => console.log('الفيديو جاهز للتشغيل'));
+                    introVideo.addEventListener('error', (e) => console.error('خطأ في الفيديو:', e));
+
+                    // تحميل الفيديو
                     introVideo.load();
                     introVideo.muted = true; // Start muted for better performance
                 }
@@ -1176,16 +1191,48 @@
                         startPopup.style.display = 'none';
                         introVideo.style.display = 'block';
                         introVideo.muted = false;
+
+                        // محاولة تشغيل الفيديو مع معالجة أفضل للأخطاء
                         console.log('محاولة تشغيل الفيديو');
-                        introVideo.play().then(function () {
-                            console.log('الفيديو بدأ يشتغل');
-                        }).catch(function (error) {
-                            console.log('خطأ في الفيديو:', error);
-                            // إذا فشل الفيديو، اعرض الـ popup التالي
-                            setTimeout(function () {
-                                videoOverlay.style.display = 'none';
-                            }, 2000);
-                        });
+
+                        // إعادة تعيين الفيديو إذا كان هناك مشكلة
+                        if (introVideo.readyState === 0) {
+                            introVideo.load();
+                        }
+
+                        const playPromise = introVideo.play();
+
+                        if (playPromise !== undefined) {
+                            playPromise.then(function () {
+                                console.log('الفيديو بدأ يشتغل بنجاح');
+                            }).catch(function (error) {
+                                console.log('خطأ في تشغيل الفيديو:', error);
+
+                                // محاولة إصلاح المشكلة
+                                if (error.name === 'NotAllowedError') {
+                                    console.log('المستخدم لم يسمح بتشغيل الفيديو');
+                                    // إظهار رسالة للمستخدم
+                                    alert('يرجى السماح بتشغيل الفيديو في المتصفح');
+                                } else if (error.name === 'NotSupportedError') {
+                                    console.log('تنسيق الفيديو غير مدعوم');
+                                    // تجربة مصدر آخر
+                                    introVideo.src = 'video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4';
+                                    introVideo.load();
+                                    introVideo.play().catch(e => {
+                                        console.log('فشل المصدر البديل أيضاً:', e);
+                                        // إذا فشل الفيديو، اعرض الـ popup التالي
+                                        setTimeout(function () {
+                                            videoOverlay.style.display = 'none';
+                                        }, 2000);
+                                    });
+                                } else {
+                                    // إذا فشل الفيديو، اعرض الـ popup التالي
+                                    setTimeout(function () {
+                                        videoOverlay.style.display = 'none';
+                                    }, 2000);
+                                }
+                            });
+                        }
                     });
                 } else {
                     console.log('زر ابدأ مش موجود!');
