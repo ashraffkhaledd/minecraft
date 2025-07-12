@@ -797,6 +797,36 @@
                 /* Standard 16:9 aspect ratio for larger screens */
             }
         }
+
+        /* تحسينات خاصة للآيفون */
+        @supports (-webkit-touch-callout: none) {
+            .intro-video {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                -webkit-perspective: 1000;
+                perspective: 1000;
+            }
+        }
+
+        /* تحسينات للـ Safari على الآيفون */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            .intro-video {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        /* تحسينات خاصة للأجهزة المحمولة */
+        @media (max-width: 768px) {
+            .intro-video {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+            }
+        }
     </style>
 
 </head>
@@ -812,9 +842,10 @@
         </div>
         <video class="intro-video" id="introVideo"
             src="video/v/Minecraft_1_21_5_Singleplayer_2025_06_20_19_19_31_2_عريض_اكتر_1.mp4" playsinline
-            preload="metadata" muted
+            webkit-playsinline preload="metadata" muted controls="false" autoplay="false"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
-            <source src="video/v/Minecraft_1_21_5_Singleplayer_2025_06_20_19_19_31_2_عريض_اكتر_1.mp4" type="video/mp4">
+            <source src="video/v/Minecraft_1_21_5_Singleplayer_2025_06_20_19_19_31_2_عريض_اكتر_1.mp4"
+                type="video/mp4; codecs='avc1.42E01E, mp4a.40.2'">
             <source src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4" type="video/mp4">
             <source src="video/البداية بالطول_10.mp4" type="video/mp4">
             <p>متصفحك لا يدعم تشغيل الفيديو.</p>
@@ -1176,6 +1207,11 @@
                     introVideo.addEventListener('canplay', () => console.log('الفيديو جاهز للتشغيل'));
                     introVideo.addEventListener('error', (e) => console.error('خطأ في الفيديو:', e));
 
+                    // تحسينات خاصة للآيفون
+                    introVideo.setAttribute('webkit-playsinline', 'true');
+                    introVideo.setAttribute('playsinline', 'true');
+                    introVideo.setAttribute('x-webkit-airplay', 'allow');
+
                     // تحميل الفيديو
                     introVideo.load();
                     introVideo.muted = true; // Start muted for better performance
@@ -1195,44 +1231,51 @@
                         // محاولة تشغيل الفيديو مع معالجة أفضل للأخطاء
                         console.log('محاولة تشغيل الفيديو');
 
+                        // تحسينات خاصة للآيفون
+                        introVideo.setAttribute('webkit-playsinline', 'true');
+                        introVideo.setAttribute('playsinline', 'true');
+
                         // إعادة تعيين الفيديو إذا كان هناك مشكلة
                         if (introVideo.readyState === 0) {
                             introVideo.load();
                         }
 
-                        const playPromise = introVideo.play();
+                        // محاولة تشغيل الفيديو مع تأخير للآيفون
+                        setTimeout(() => {
+                            const playPromise = introVideo.play();
 
-                        if (playPromise !== undefined) {
-                            playPromise.then(function () {
-                                console.log('الفيديو بدأ يشتغل بنجاح');
-                            }).catch(function (error) {
-                                console.log('خطأ في تشغيل الفيديو:', error);
+                            if (playPromise !== undefined) {
+                                playPromise.then(function () {
+                                    console.log('الفيديو بدأ يشتغل بنجاح');
+                                }).catch(function (error) {
+                                    console.log('خطأ في تشغيل الفيديو:', error);
 
-                                // محاولة إصلاح المشكلة
-                                if (error.name === 'NotAllowedError') {
-                                    console.log('المستخدم لم يسمح بتشغيل الفيديو');
-                                    // إظهار رسالة للمستخدم
-                                    alert('يرجى السماح بتشغيل الفيديو في المتصفح');
-                                } else if (error.name === 'NotSupportedError') {
-                                    console.log('تنسيق الفيديو غير مدعوم');
-                                    // تجربة مصدر آخر
-                                    introVideo.src = 'video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4';
-                                    introVideo.load();
-                                    introVideo.play().catch(e => {
-                                        console.log('فشل المصدر البديل أيضاً:', e);
+                                    // محاولة إصلاح المشكلة
+                                    if (error.name === 'NotAllowedError') {
+                                        console.log('المستخدم لم يسمح بتشغيل الفيديو');
+                                        // إظهار رسالة للمستخدم
+                                        alert('يرجى السماح بتشغيل الفيديو في المتصفح');
+                                    } else if (error.name === 'NotSupportedError') {
+                                        console.log('تنسيق الفيديو غير مدعوم');
+                                        // تجربة مصدر آخر
+                                        introVideo.src = 'video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4';
+                                        introVideo.load();
+                                        introVideo.play().catch(e => {
+                                            console.log('فشل المصدر البديل أيضاً:', e);
+                                            // إذا فشل الفيديو، اعرض الـ popup التالي
+                                            setTimeout(function () {
+                                                videoOverlay.style.display = 'none';
+                                            }, 2000);
+                                        });
+                                    } else {
                                         // إذا فشل الفيديو، اعرض الـ popup التالي
                                         setTimeout(function () {
                                             videoOverlay.style.display = 'none';
                                         }, 2000);
-                                    });
-                                } else {
-                                    // إذا فشل الفيديو، اعرض الـ popup التالي
-                                    setTimeout(function () {
-                                        videoOverlay.style.display = 'none';
-                                    }, 2000);
-                                }
-                            });
-                        }
+                                    }
+                                });
+                            }
+                        }, 1000); // إضافة تأخير للآيفون
                     });
                 } else {
                     console.log('زر ابدأ مش موجود!');
