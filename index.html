@@ -765,68 +765,6 @@
             opacity: 1;
             backdrop-filter: blur(18px);
         }
-
-        /* Responsive video container styles */
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-        }
-
-        .responsive-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .video-container {
-                padding-bottom: 75%;
-                /* Adjust aspect ratio for smaller screens */
-            }
-        }
-
-        @media (min-width: 769px) {
-            .video-container {
-                padding-bottom: 56.25%;
-                /* Standard 16:9 aspect ratio for larger screens */
-            }
-        }
-
-        /* تحسينات خاصة للآيفون */
-        @supports (-webkit-touch-callout: none) {
-            .intro-video {
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-                -webkit-backface-visibility: hidden;
-                backface-visibility: hidden;
-                -webkit-perspective: 1000;
-                perspective: 1000;
-            }
-        }
-
-        /* تحسينات للـ Safari على الآيفون */
-        @media screen and (-webkit-min-device-pixel-ratio: 0) {
-            .intro-video {
-                -webkit-transform: translate3d(0, 0, 0);
-                transform: translate3d(0, 0, 0);
-            }
-        }
-
-        /* تحسينات خاصة للأجهزة المحمولة */
-        @media (max-width: 768px) {
-            .intro-video {
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-                -webkit-backface-visibility: hidden;
-                backface-visibility: hidden;
-            }
-        }
     </style>
 
 </head>
@@ -840,11 +778,13 @@
             <button id="startBtn"
                 style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
-        <video class="intro-video" id="introVideo" src="video/v/vv.mp4" playsinline webkit-playsinline
-            preload="metadata" muted controls="false" autoplay="false"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
-            <p>متصفحك لا يدعم تشغيل الفيديو.</p>
-        </video>
+        <video class="intro-video" id="introVideo" preload="auto"
+            src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4" playsinline
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <button id="enableSoundBtn"
+            style="position: absolute; bottom: 20px; right: 20px; z-index: 9999; padding: 10px 20px; font-size: 18px; display: none;">
+            تشغيل الصوت ��
+        </button>
     </div>
     <div class="one">
         <img src="img/full نهائي (1).jpg" class="img1" alt="">
@@ -1189,25 +1129,13 @@
                 const startBtn = document.getElementById('startBtn');
                 const introVideo = document.getElementById('introVideo');
                 const fadeBlur = document.getElementById('fadeBlur');
+                const enableSoundBtn = document.getElementById('enableSoundBtn');
 
                 console.log('تم تحميل الصفحة');
-                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur });
+                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur, enableSoundBtn });
 
-                // تحسين تحميل الفيديو
+                // Preload video for better performance
                 if (introVideo) {
-                    // إضافة event listeners للفيديو
-                    introVideo.addEventListener('loadstart', () => console.log('بدء تحميل الفيديو'));
-                    introVideo.addEventListener('loadedmetadata', () => console.log('تم تحميل metadata الفيديو'));
-                    introVideo.addEventListener('loadeddata', () => console.log('تم تحميل بيانات الفيديو'));
-                    introVideo.addEventListener('canplay', () => console.log('الفيديو جاهز للتشغيل'));
-                    introVideo.addEventListener('error', (e) => console.error('خطأ في الفيديو:', e));
-
-                    // تحسينات خاصة للآيفون
-                    introVideo.setAttribute('webkit-playsinline', 'true');
-                    introVideo.setAttribute('playsinline', 'true');
-                    introVideo.setAttribute('x-webkit-airplay', 'allow');
-
-                    // تحميل الفيديو
                     introVideo.load();
                     introVideo.muted = true; // Start muted for better performance
                 }
@@ -1218,71 +1146,13 @@
                     startBtn.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('تم الضغط على ابدأ');
                         startPopup.style.display = 'none';
                         introVideo.style.display = 'block';
-                        introVideo.muted = false;
-
-                        // محاولة تشغيل الفيديو مع معالجة أفضل للأخطاء
-                        console.log('محاولة تشغيل الفيديو');
-
-                        // تحسينات خاصة للآيفون
-                        introVideo.setAttribute('webkit-playsinline', 'true');
-                        introVideo.setAttribute('playsinline', 'true');
-
-                        // إعادة تعيين الفيديو إذا كان هناك مشكلة
-                        if (introVideo.readyState === 0) {
-                            introVideo.load();
-                        }
-
-                        // محاولة تشغيل الفيديو مع تأخير للآيفون
-                        setTimeout(() => {
-                            const playPromise = introVideo.play();
-
-                            if (playPromise !== undefined) {
-                                playPromise.then(function () {
-                                    console.log('الفيديو بدأ يشتغل بنجاح');
-                                }).catch(function (error) {
-                                    console.log('خطأ في تشغيل الفيديو:', error);
-
-                                    // محاولة إصلاح المشكلة
-                                    if (error.name === 'NotAllowedError') {
-                                        console.log('المستخدم لم يسمح بتشغيل الفيديو');
-                                        // إظهار رسالة للمستخدم
-                                        alert('يرجى السماح بتشغيل الفيديو في المتصفح');
-                                    } else if (error.name === 'NotSupportedError') {
-                                        console.log('تنسيق الفيديو غير مدعوم');
-                                        // تجربة مصدر آخر
-                                        introVideo.src = 'video/v/Minecraft_1_21_5_Singleplayer_2025_06_20_19_19_31_2_عريض_اكتر_1.mp4';
-                                        introVideo.load();
-                                        introVideo.play().catch(e => {
-                                            console.log('فشل المصدر البديل أيضاً:', e);
-                                            // إذا فشل الفيديو، اعرض صورة بدلاً منه
-                                            console.log('عرض صورة بدلاً من الفيديو');
-                                            videoOverlay.style.background = "url('img2/الغلاف.jpg') center center";
-                                            videoOverlay.style.backgroundSize = "cover";
-                                            introVideo.style.display = 'none';
-
-                                            // إخفاء الفيديو بعد 3 ثواني
-                                            setTimeout(function () {
-                                                videoOverlay.style.display = 'none';
-                                            }, 3000);
-                                        });
-                                    } else {
-                                        // إذا فشل الفيديو، اعرض صورة بدلاً منه
-                                        console.log('عرض صورة بدلاً من الفيديو');
-                                        videoOverlay.style.background = "url('img2/الغلاف.jpg') center center";
-                                        videoOverlay.style.backgroundSize = "cover";
-                                        introVideo.style.display = 'none';
-
-                                        // إخفاء الفيديو بعد 3 ثواني
-                                        setTimeout(function () {
-                                            videoOverlay.style.display = 'none';
-                                        }, 3000);
-                                    }
-                                });
-                            }
-                        }, 1000); // إضافة تأخير للآيفون
+                        introVideo.muted = true;
+                        introVideo.play().then(() => {
+                            console.log("✅ الفيديو بدأ ميوت");
+                            document.getElementById('enableSoundBtn').style.display = 'block';
+                        });
                     });
                 } else {
                     console.log('زر ابدأ مش موجود!');
@@ -1329,6 +1199,24 @@
                             videoOverlay.style.opacity = '1';
                         }, 1900);
                     });
+                }
+
+                if (enableSoundBtn) {
+                    enableSoundBtn.addEventListener('click', () => {
+                        introVideo.muted = false;
+                        introVideo.volume = 1.0;
+                        introVideo.currentTime = introVideo.currentTime;
+                        introVideo.play();
+                        enableSoundBtn.style.display = 'none';
+                    });
+                }
+            });
+
+            // بعد تعريف introVideo
+            window.addEventListener("load", () => {
+                const introVideo = document.getElementById("introVideo");
+                if (introVideo) {
+                    introVideo.classList.add("show");
                 }
             });
         </script>
