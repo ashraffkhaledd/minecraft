@@ -781,9 +781,8 @@
 
         <video class="intro-video" id="introVideo"
             src="video/v/Minecraft_1_21_5_Singleplayer_2025_06_20_19_19_31_2_عريض_اكتر_1.mp4" playsinline
-            webkit-playsinline muted preload="metadata"
+            webkit-playsinline muted autoplay preload="auto" poster="img2/الغلاف.jpg"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
-            <!-- مصادر بديلة للفيديو -->
             <source src="video/vlc-record-2025-06-20-22h25m41s-فيديو البداية.mp4-.mp4"
                 type="video/mp4; codecs='avc1.42E01E, mp4a.40.2'">
             <source src="video/v/Minecraft 1.21.5 - Singleplayer 2025-06-20 19-19-31_2.mp4" type="video/mp4">
@@ -1147,7 +1146,10 @@
                     // تحسينات خاصة للأجهزة المحمولة
                     introVideo.setAttribute('webkit-playsinline', 'true');
                     introVideo.setAttribute('playsinline', 'true');
-
+                    introVideo.setAttribute('autoplay', 'true');
+                    introVideo.setAttribute('muted', 'true');
+                    introVideo.muted = true;
+                    introVideo.autoplay = true;
                     // مراقبة حالة الفيديو
                     introVideo.addEventListener('loadstart', () => console.log('🔄 بدء تحميل الفيديو'));
                     introVideo.addEventListener('loadedmetadata', () => console.log('📊 تم تحميل metadata الفيديو'));
@@ -1156,9 +1158,7 @@
                         console.error('❌ خطأ في الفيديو:', e);
                         console.error('تفاصيل الخطأ:', introVideo.error);
                     });
-
                     introVideo.load();
-                    introVideo.muted = true;
                 }
 
                 // زر ابدأ الأول
@@ -1172,22 +1172,29 @@
                         startPopup.style.display = 'none';
                         introVideo.style.display = 'block';
                         introVideo.muted = true;
-
+                        introVideo.autoplay = true;
                         // محاولة تشغيل الفيديو مع معالجة الأخطاء
                         const playPromise = introVideo.play();
-
                         if (playPromise !== undefined) {
                             playPromise.then(() => {
                                 console.log("✅ الفيديو بدأ يشتغل بنجاح");
                                 document.getElementById('enableSoundBtn').style.display = 'block';
                             }).catch((error) => {
                                 console.error('❌ خطأ في تشغيل الفيديو:', error);
-
                                 // محاولة إصلاح المشكلة
                                 if (error.name === 'NotAllowedError') {
                                     console.log('🔇 المستخدم لم يسمح بتشغيل الفيديو');
                                     // إظهار رسالة للمستخدم
-                                    alert('يرجى السماح بتشغيل الفيديو في المتصفح');
+                                    alert('يرجى الضغط على الشاشة لتشغيل الفيديو');
+                                    // إضافة حدث تفاعل المستخدم لتشغيل الفيديو
+                                    document.body.addEventListener('touchstart', function userStart() {
+                                        introVideo.play();
+                                        document.body.removeEventListener('touchstart', userStart);
+                                    });
+                                    document.body.addEventListener('click', function userStart() {
+                                        introVideo.play();
+                                        document.body.removeEventListener('click', userStart);
+                                    });
                                 } else if (error.name === 'NotSupportedError') {
                                     console.log('📱 تنسيق الفيديو غير مدعوم');
                                     // تجربة مصدر آخر
