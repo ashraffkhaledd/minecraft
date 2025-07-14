@@ -779,21 +779,11 @@
                 style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
         </div>
 
-        <!-- Try a simple, ASCII-only filename for mobile compatibility -->
         <video class="intro-video" id="introVideo" src="video/v/mvideo.mp4" playsinline webkit-playsinline muted
             autoplay preload="auto" poster="img2/1012949.png"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
-            <source src="video/intro.mp4" type="video/mp4">
+            <source src="video/v/mvideo.mp4" type="video/mp4">
         </video>
-        <!-- Fallback YouTube embed, hidden by default -->
-        <iframe id="ytFallback" width="100%" height="100%"
-            style="display:none;position:absolute;top:0;left:0;z-index:4000;" frameborder="0" allowfullscreen
-            allow="autoplay; encrypted-media"
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"></iframe>
-        <!-- Direct test link for debugging -->
-        <a href="video/intro.mp4" target="_blank"
-            style="position:absolute;top:10px;right:10px;z-index:5000;background:#fff;padding:4px 8px;border-radius:4px;font-size:14px;">Test
-            video file</a>
         <button id="enableSoundBtn"
             style="position: absolute; bottom: 20px; right: 20px; z-index: 9999; padding: 10px 20px; font-size: 18px; display: none;">
             تشغيل الصوت ��
@@ -1149,22 +1139,18 @@
 
                 // تحميل الفيديو مع تحسينات للأجهزة المحمولة
                 if (introVideo) {
-                    // تحسينات خاصة للأجهزة المحمولة
                     introVideo.setAttribute('webkit-playsinline', 'true');
                     introVideo.setAttribute('playsinline', 'true');
                     introVideo.setAttribute('autoplay', 'true');
                     introVideo.setAttribute('muted', 'true');
                     introVideo.muted = true;
                     introVideo.autoplay = true;
-                    // مراقبة حالة الفيديو
                     introVideo.addEventListener('loadstart', () => console.log('🔄 بدء تحميل الفيديو'));
                     introVideo.addEventListener('loadedmetadata', () => console.log('📊 تم تحميل metadata الفيديو'));
                     introVideo.addEventListener('canplay', () => console.log('✅ الفيديو جاهز للتشغيل'));
                     introVideo.addEventListener('error', (e) => {
                         console.error('❌ خطأ في الفيديو:', e);
                         console.error('تفاصيل الخطأ:', introVideo.error);
-                        // Fallback to YouTube embed
-                        document.getElementById('ytFallback').style.display = 'block';
                         introVideo.style.display = 'none';
                     });
                     introVideo.load();
@@ -1187,13 +1173,13 @@
                         if (playPromise !== undefined) {
                             playPromise.then(() => {
                                 console.log("✅ الفيديو بدأ يشتغل بنجاح");
-                                document.getElementById('enableSoundBtn').style.display = 'block';
+                                // Show enable sound button if video is muted
+                                if (introVideo.muted) {
+                                    document.getElementById('enableSoundBtn').style.display = 'block';
+                                }
                             }).catch((error) => {
                                 console.error('❌ خطأ في تشغيل الفيديو:', error);
-                                // Fallback to YouTube embed
-                                document.getElementById('ytFallback').style.display = 'block';
                                 introVideo.style.display = 'none';
-                                // محاولة إصلاح المشكلة
                                 if (error.name === 'NotAllowedError') {
                                     console.log('🔇 المستخدم لم يسمح بتشغيل الفيديو');
                                     alert('يرجى الضغط على الشاشة لتشغيل الفيديو');
@@ -1263,6 +1249,8 @@
                         introVideo.muted = false;
                         introVideo.volume = 1.0;
                         enableSoundBtn.style.display = 'none';
+                        // Try to play again with sound
+                        introVideo.play();
                     });
                 }
             });
