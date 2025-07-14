@@ -1166,7 +1166,7 @@
 
                         startPopup.style.display = 'none';
                         introVideo.style.display = 'block';
-                        introVideo.muted = true;
+                        introVideo.muted = false;
                         introVideo.autoplay = true;
                         // محاولة تشغيل الفيديو مع معالجة الأخطاء
                         const playPromise = introVideo.play();
@@ -1184,10 +1184,12 @@
                                     console.log('🔇 المستخدم لم يسمح بتشغيل الفيديو');
                                     alert('يرجى الضغط على الشاشة لتشغيل الفيديو');
                                     document.body.addEventListener('touchstart', function userStart() {
+                                        introVideo.muted = false;
                                         introVideo.play();
                                         document.body.removeEventListener('touchstart', userStart);
                                     });
                                     document.body.addEventListener('click', function userStart() {
+                                        introVideo.muted = false;
                                         introVideo.play();
                                         document.body.removeEventListener('click', userStart);
                                     });
