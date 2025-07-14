@@ -776,7 +776,11 @@
         <div class="start-popup" id="startPopup"
             style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; position: absolute; top: 480px; right: 170px;">
             <button id="startBtn"
-                style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease;">ابدأ</button>
+                style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                <span id="progressBar"
+                    style="position: absolute; left: 0; top: 0; height: 100%; width: 0; background: linear-gradient(90deg, #4CAF50 0%, #66BB6A 50%, #4CAF50 100%); border-radius: 5px; z-index: 1; transition: width 0.3s cubic-bezier(.4,2,.6,1); display: block;"></span>
+                <span id="progressText" style="position: relative; z-index: 2; color: white;">ابدأ</span>
+            </button>
         </div>
 
         <video class="intro-video" id="introVideo" src="video/v/encode.mp4" playsinline webkit-playsinline muted
@@ -810,8 +814,20 @@
         </div>
 
         <script>
-            // Preload critical images for better performance
-            const preloadImages = [
+            // تحميل الصور عند الحاجة بدلاً من التحميل المسبق الكامل
+            const imageCache = new Map();
+
+            function preloadImage(src) {
+                if (!imageCache.has(src)) {
+                    const img = new Image();
+                    img.src = src;
+                    imageCache.set(src, img);
+                }
+                return imageCache.get(src);
+            }
+
+            // تحميل الصور المهمة فقط
+            const criticalImages = [
                 'img/fc.jpg',
                 'img/نهائي 2.jpg',
                 'img/sheep.png',
@@ -824,13 +840,10 @@
                 'img/blackgift.png'
             ];
 
-            // Preload images
-            preloadImages.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
+            // تحميل الصور المهمة فقط
+            criticalImages.forEach(src => preloadImage(src));
 
-            // Sound effects for gifts - with error handling
+            // تحسين تحميل الأصوات
             const sounds = {
                 gift1: new Audio('audio/sheap.mp3'),
                 gift2: new Audio('audio/bee audio.mp3'),
@@ -847,16 +860,15 @@
                 gift13: new Audio('audio/error-call-to-attention-129258.mp3'),
             };
 
-            // Preload audio files for better performance
+            // تحميل الأصوات عند الحاجة فقط
             Object.values(sounds).forEach(audio => {
-                audio.load();
-                audio.volume = 0.7; // Set volume for better experience
+                audio.volume = 0.7;
             });
 
             // Set higher volume for gifts 8, 12, and 13
-            sounds.gift8.volume = 1.0; // Maximum volume
-            sounds.gift12.volume = 1.0; // Maximum volume
-            sounds.gift13.volume = 1.0; // Maximum volume
+            sounds.gift8.volume = 1.0;
+            sounds.gift12.volume = 1.0;
+            sounds.gift13.volume = 1.0;
 
             // Popup images for gifts
             const images = {
@@ -909,15 +921,12 @@
 
                 if (giftClass) {
                     currentGift = giftClass;
-                    console.log('Clicked gift:', giftClass);
 
                     // Play sound with error handling
                     const sound = sounds[giftClass];
                     if (sound) {
-                        console.log('Playing sound for:', giftClass);
                         sound.currentTime = 0;
                         sound.play().catch(error => {
-                            console.error('Error playing sound:', error);
                             // Continue without sound if there's an error
                         });
                     }
@@ -925,7 +934,6 @@
                     // Load popup image
                     const popupImagePath = images[giftClass];
                     if (popupImagePath) {
-                        console.log('Loading image:', popupImagePath);
                         popupImg.src = popupImagePath;
                     }
 
@@ -934,9 +942,7 @@
                         popupImg.style.width = '70vw';
                         popupImg.style.height = 'auto';
                         popup.classList.add('active');
-                        // Remove animation classes for persistent popup
                         popupImg.classList.remove('animate', 'animate-long');
-                        // No auto-close timeout for these gifts - they stay until clicked
                     } else {
                         popupImg.style.width = '100%';
                         popupImg.style.height = 'auto';
@@ -979,8 +985,8 @@
                 const giftImg = document.createElement('img');
                 giftImg.src = gift.src;
                 giftImg.alt = 'Gift';
-                giftImg.loading = 'lazy'; // Lazy loading for better performance
-                giftImg.decoding = 'async'; // Async decoding for better performance
+                giftImg.loading = 'lazy';
+                giftImg.decoding = 'async';
                 giftElement.appendChild(giftImg);
 
                 // Add animated arrows only for the first gift1
@@ -1044,7 +1050,7 @@
                 giftPositions.forEach(gift => {
                     if (skipGift12 && gift.class === 'gift12' && !usedGift12) {
                         usedGift12 = true;
-                        return; // Skip the first gift12 only
+                        return;
                     }
                     container.appendChild(createGift(gift, isLoopGift));
                 });
@@ -1057,34 +1063,26 @@
                 const img = document.createElement('img');
                 img.src = 'img/نهائي 2.jpg';
                 img.className = 'img2';
-                img.loading = 'lazy'; // Lazy loading for better performance
-                img.decoding = 'async'; // Async decoding for better performance
+                img.loading = 'lazy';
+                img.decoding = 'async';
                 imageWrapper.appendChild(img);
 
-                // Add gifts to this image (loop gifts)
                 addGiftsToContainer(imageWrapper, true);
-
                 return imageWrapper;
             }
 
             // Initialize everything after DOM is loaded
             function initializeGame() {
-                console.log('Initializing game...');
-
-                // Add gifts to first image (not loop gifts), but skip first gift12
                 const firstImageContainer = document.querySelector('.one');
                 if (firstImageContainer) {
                     addGiftsToContainer(firstImageContainer, false, true);
-                    console.log('Added gifts to first image (skipping first gift12)');
                 }
 
-                // Add initial images
                 const scrollContainer = document.getElementById('scrollContainer');
                 if (scrollContainer) {
                     for (let i = 0; i < 2; i++) {
                         scrollContainer.appendChild(createImageWithGifts());
                     }
-                    console.log('Added initial images');
                 }
 
                 // Throttled scroll handler for better performance
@@ -1093,7 +1091,6 @@
                     const scrollBottom = window.scrollY + window.innerHeight;
                     const documentHeight = document.documentElement.scrollHeight;
 
-                    // If we're near the bottom, add another image
                     if (scrollBottom >= documentHeight - 100) {
                         if (scrollContainer) {
                             scrollContainer.appendChild(createImageWithGifts());
@@ -1102,7 +1099,6 @@
                     }
                 }
 
-                // Throttled scroll event listener
                 window.addEventListener('scroll', () => {
                     if (scrollTimeout) return;
                     scrollTimeout = setTimeout(() => {
@@ -1111,20 +1107,16 @@
                     }, 100);
                 });
 
-                // Initial check
                 checkAndAddImage();
-
-                console.log('Game initialized successfully');
             }
 
-            // Wait for DOM to be fully loaded
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initializeGame);
             } else {
                 initializeGame();
             }
 
-            // نظام الفيديو التفاعلي - محسن للأداء
+            // نظام الفيديو المحسن
             document.addEventListener('DOMContentLoaded', function () {
                 const videoOverlay = document.getElementById('videoOverlay');
                 const startPopup = document.getElementById('startPopup');
@@ -1132,111 +1124,145 @@
                 const introVideo = document.getElementById('introVideo');
                 const fadeBlur = document.getElementById('fadeBlur');
                 const enableSoundBtn = document.getElementById('enableSoundBtn');
+                const progressBar = document.getElementById('progressBar');
+                const progressText = document.getElementById('progressText');
 
-                console.log('تم تحميل الصفحة');
-                console.log('العناصر:', { videoOverlay, startPopup, startBtn, introVideo, fadeBlur, enableSoundBtn });
+                let canPlay = false;
+                let progressReady = false;
+                let videoStarted = false;
+                let minLoadTime = 1200;
+                let loadStart = 0;
+                let eventListenersAdded = false;
 
-                // تحميل الفيديو مع تحسينات للأجهزة المحمولة
-                if (introVideo) {
-                    introVideo.setAttribute('webkit-playsinline', 'true');
-                    introVideo.setAttribute('playsinline', 'true');
-                    introVideo.setAttribute('autoplay', 'true');
-                    introVideo.setAttribute('muted', 'true');
-                    introVideo.muted = true;
-                    introVideo.autoplay = true;
-                    introVideo.addEventListener('loadstart', () => console.log('🔄 بدء تحميل الفيديو'));
-                    introVideo.addEventListener('loadedmetadata', () => console.log('📊 تم تحميل metadata الفيديو'));
-                    introVideo.addEventListener('canplay', () => console.log('✅ الفيديو جاهز للتشغيل'));
-                    introVideo.addEventListener('error', (e) => {
-                        console.error('❌ خطأ في الفيديو:', e);
-                        console.error('تفاصيل الخطأ:', introVideo.error);
-                        introVideo.style.display = 'none';
-                    });
-                    introVideo.load();
-                }
-
-                // زر ابدأ الأول
-                if (startBtn) {
-                    console.log('زر ابدأ موجود');
-                    startBtn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log('🎬 محاولة تشغيل الفيديو...');
-
-                        startPopup.style.display = 'none';
+                function tryShowVideo() {
+                    if (canPlay && progressReady && !videoStarted) {
+                        videoStarted = true;
+                        startBtn.style.display = 'none';
                         introVideo.style.display = 'block';
                         introVideo.muted = false;
                         introVideo.autoplay = true;
-                        // محاولة تشغيل الفيديو مع معالجة الأخطاء
                         const playPromise = introVideo.play();
-                        if (playPromise !== undefined) {
+                        if (playPromise) {
                             playPromise.then(() => {
-                                console.log("✅ الفيديو بدأ يشتغل بنجاح");
-                                // Show enable sound button if video is muted
                                 if (introVideo.muted) {
                                     document.getElementById('enableSoundBtn').style.display = 'block';
                                 }
-                            }).catch((error) => {
-                                console.error('❌ خطأ في تشغيل الفيديو:', error);
-                                introVideo.style.display = 'none';
-                                if (error.name === 'NotAllowedError') {
-                                    console.log('🔇 المستخدم لم يسمح بتشغيل الفيديو');
-                                    alert('يرجى الضغط على الشاشة لتشغيل الفيديو');
-                                    document.body.addEventListener('touchstart', function userStart() {
-                                        introVideo.muted = false;
-                                        introVideo.play();
-                                        document.body.removeEventListener('touchstart', userStart);
-                                    });
-                                    document.body.addEventListener('click', function userStart() {
-                                        introVideo.muted = false;
-                                        introVideo.play();
-                                        document.body.removeEventListener('click', userStart);
-                                    });
-                                }
+                            }).catch(err => {
+                                alert('حدث خطأ أثناء تشغيل الفيديو: ' + err.message);
                             });
                         }
-                    });
-
-                    // دالة لعرض صورة بديلة إذا فشل الفيديو
-                    function showFallbackImage() {
-                        console.log('🖼️ عرض صورة بديلة');
-                        videoOverlay.style.background = "url('img2/الغلاف.jpg') center center";
-                        videoOverlay.style.backgroundSize = "cover";
-                        introVideo.style.display = 'none';
-
-                        setTimeout(() => {
-                            videoOverlay.style.display = 'none';
-                        }, 3000);
                     }
-                } else {
-                    console.log('زر ابدأ مش موجود!');
                 }
 
-                // عند انتهاء الفيديو
-                const minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
-                minecraftMusic.volume = 0.7;
+                function updateLoader() {
+                    if (!introVideo.buffered || introVideo.buffered.length === 0) return;
+                    const bufferedEnd = introVideo.buffered.end(introVideo.buffered.length - 1);
+                    const duration = introVideo.duration || 1;
+                    let percent = Math.min(100, Math.round((bufferedEnd / duration) * 100));
+                    progressBar.style.width = percent + '%';
+                    if (percent >= 99) {
+                        progressReady = true;
+                        let elapsed = Date.now() - loadStart;
+                        if (canPlay && !videoStarted) {
+                            if (elapsed < minLoadTime) {
+                                setTimeout(tryShowVideo, minLoadTime - elapsed);
+                            } else {
+                                tryShowVideo();
+                            }
+                        }
+                    }
+                }
+
+                function onVideoReady() {
+                    canPlay = true;
+                    let elapsed = Date.now() - loadStart;
+                    if (progressReady && !videoStarted) {
+                        if (elapsed < minLoadTime) {
+                            setTimeout(tryShowVideo, minLoadTime - elapsed);
+                        } else {
+                            tryShowVideo();
+                        }
+                    }
+                }
+
+                if (startBtn && progressBar && progressText && introVideo) {
+                    startBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        // حول الزر إلى شريط تحميل
+                        progressBar.style.display = 'block';
+                        progressText.textContent = 'جار التحميل...';
+                        startBtn.style.color = '#ff9800';
+                        startBtn.style.background = '#fff';
+                        startBtn.style.boxShadow = '0 4px 24px #ff9800b0, 0 2px 8px #0002';
+
+                        // حضّر الفيديو للتحميل
+                        introVideo.style.display = 'none';
+                        introVideo.preload = 'auto';
+                        introVideo.muted = true;
+                        introVideo.autoplay = false;
+                        introVideo.src = introVideo.src.split('?')[0] + '?t=' + Date.now();
+
+                        canPlay = false;
+                        progressReady = false;
+                        videoStarted = false;
+                        loadStart = Date.now();
+
+                        // إضافة event listeners مرة واحدة فقط
+                        if (!eventListenersAdded) {
+                            introVideo.addEventListener('progress', updateLoader);
+                            introVideo.addEventListener('loadedmetadata', updateLoader);
+                            introVideo.addEventListener('canplaythrough', onVideoReady);
+                            eventListenersAdded = true;
+                        }
+
+                        introVideo.load();
+
+                        // في حال حصل خطأ في التحميل
+                        introVideo.addEventListener('error', function () {
+                            startBtn.style.display = 'none';
+                            alert('تعذر تحميل الفيديو. تأكد من وجود الملف أو جرب تحديث الصفحة.');
+                        });
+                    });
+                }
+
+                // عند الضغط على الفيديو
+                if (introVideo) {
+                    introVideo.addEventListener('click', function () {
+                        introVideo.style.display = 'none';
+                        if (videoOverlay) videoOverlay.style.display = 'none';
+                    });
+                }
+
+                // تحسين الموسيقى
+                let minecraftMusic = null;
                 let minecraftMusicTried = false;
 
                 function tryPlayMinecraftMusic() {
                     if (!minecraftMusicTried) {
                         minecraftMusicTried = true;
+                        if (!minecraftMusic) {
+                            minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
+                            minecraftMusic.volume = 0.7;
+                        }
                         minecraftMusic.currentTime = 0;
                         minecraftMusic.play().catch(function (err) {
-                            console.warn('لم يتم تشغيل الصوت تلقائياً، في انتظار تفاعل المستخدم...', err);
-                            // إذا فشل التشغيل، انتظر أول تفاعل من المستخدم
                             document.body.addEventListener('click', playMinecraftOnUser, { once: true });
                             document.body.addEventListener('touchstart', playMinecraftOnUser, { once: true });
                         });
                     }
                 }
+
                 function playMinecraftOnUser() {
-                    minecraftMusic.currentTime = 0;
-                    minecraftMusic.play();
+                    if (minecraftMusic) {
+                        minecraftMusic.currentTime = 0;
+                        minecraftMusic.play();
+                    }
                 }
 
                 if (introVideo) {
                     introVideo.addEventListener('ended', function () {
-                        console.log('انتهى الفيديو');
                         tryPlayMinecraftMusic();
                         fadeBlur.classList.add('active');
                         setTimeout(function () {
@@ -1250,13 +1276,10 @@
                         introVideo.muted = false;
                         introVideo.volume = 1.0;
                         enableSoundBtn.style.display = 'none';
-                        // Try to play again with sound
                         introVideo.play();
                     });
                 }
             });
-
-
         </script>
     </div>
 </body>
