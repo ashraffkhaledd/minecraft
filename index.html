@@ -770,27 +770,15 @@
 </head>
 
 <body>
-    <div class="video-overlay" id="videoOverlay"
-        style="position: fixed; top: 0; left: 0; width: 100vw; height: 120vh; background: url('img2/الغلاف.jpg') center center; background-size: cover; z-index: 3000; display: flex; align-items: center; justify-content: center;">
+    <!-- شاشة البداية الأصلية -->
+    <div id="splashScreen"
+        style="position:fixed;top:0;left:0;width:100vw;height:120vh;z-index:3000;display:flex;align-items:center;justify-content:center;background:url('img2/الغلاف.jpg') center center;background-size:cover;">
         <div class="fade-blur" id="fadeBlur"></div>
         <div class="start-popup" id="startPopup"
-            style="background: transparent; padding: 30px; border-radius: 10px; text-align: center; position: absolute; top: 480px; right: 170px;">
-            <button id="startBtn"
-                style="font-family: 'Handjet', cursive; font-size: 40px; padding: 15px 30px; background: rgba(4, 4, 4, 0.554); color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665); animation: buttonGlow 2s ease-in-out infinite; transition: all 0.3s ease; position: relative; overflow: hidden;">
-                <span id="progressBar"
-                    style="position: absolute; left: 0; top: 0; height: 100%; width: 0; background: linear-gradient(90deg, #4CAF50 0%, #66BB6A 50%, #4CAF50 100%); border-radius: 5px; z-index: 1; transition: width 0.3s cubic-bezier(.4,2,.6,1); display: block;"></span>
-                <span id="progressText" style="position: relative; z-index: 2; color: white;">ابدأ</span>
-            </button>
+            style="background:transparent;padding:30px;border-radius:10px;text-align:center;position:absolute;top:480px;right:170px;">
+            <button id="startGameBtn"
+                style="font-family:'Handjet',cursive;font-size:40px;padding:15px 30px;background:rgba(4,4,4,0.554);color:white;border:none;border-radius:5px;cursor:pointer;box-shadow:0 4px 15px rgba(255,1,1,0.878),0 0 20px rgba(255,0,0,0.3),0 0 30px rgba(149,63,63,0.887),0 0 40px rgba(126,33,33,0.665);animation:buttonGlow 2s ease-in-out infinite;transition:all 0.3s;">ابدأ</button>
         </div>
-
-        <video class="intro-video" id="introVideo" src="video/v/encode_optimized.mp4" playsinline webkit-playsinline
-            muted preload="metadata"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
-        </video>
-        <button id="enableSoundBtn"
-            style="position: absolute; bottom: 20px; right: 20px; z-index: 9999; padding: 10px 20px; font-size: 18px; display: none;">
-            تشغيل الصوت ��
-        </button>
     </div>
     <div class="one">
         <img src="img/full نهائي (1).jpg" class="img1" alt="">
@@ -1116,181 +1104,17 @@
                 initializeGame();
             }
 
-            // نظام الفيديو المحسن
+            // إخفاء شاشة البداية عند الضغط على زر ابدأ
             document.addEventListener('DOMContentLoaded', function () {
-                const videoOverlay = document.getElementById('videoOverlay');
-                const startPopup = document.getElementById('startPopup');
-                const startBtn = document.getElementById('startBtn');
-                const introVideo = document.getElementById('introVideo');
-                const fadeBlur = document.getElementById('fadeBlur');
-                const enableSoundBtn = document.getElementById('enableSoundBtn');
-                const progressBar = document.getElementById('progressBar');
-                const progressText = document.getElementById('progressText');
-
-                let canPlay = false;
-                let progressReady = false;
-                let videoStarted = false;
-                let minLoadTime = 1200;
-                let loadStart = 0;
-                let eventListenersAdded = false;
-
-                function tryShowVideo() {
-                    if (canPlay && progressReady && !videoStarted) {
-                        videoStarted = true;
-                        startBtn.style.display = 'none';
-                        introVideo.style.display = 'block';
-                        introVideo.muted = false;
-                        introVideo.autoplay = true;
-                        const playPromise = introVideo.play();
-                        if (playPromise) {
-                            playPromise.then(() => {
-                                if (introVideo.muted) {
-                                    document.getElementById('enableSoundBtn').style.display = 'block';
-                                }
-                            }).catch(err => {
-                                alert('حدث خطأ أثناء تشغيل الفيديو: ' + err.message);
-                            });
-                        }
-                    }
-                }
-
-                function updateLoader() {
-                    if (!introVideo.buffered || introVideo.buffered.length === 0) return;
-                    const bufferedEnd = introVideo.buffered.end(introVideo.buffered.length - 1);
-                    const duration = introVideo.duration || 1;
-                    let percent = Math.min(100, Math.round((bufferedEnd / duration) * 100));
-                    progressBar.style.width = percent + '%';
-                    if (percent >= 99) {
-                        progressReady = true;
-                        let elapsed = Date.now() - loadStart;
-                        if (canPlay && !videoStarted) {
-                            if (elapsed < minLoadTime) {
-                                setTimeout(tryShowVideo, minLoadTime - elapsed);
-                            } else {
-                                tryShowVideo();
-                            }
-                        }
-                    }
-                }
-
-                function onVideoReady() {
-                    canPlay = true;
-                    let elapsed = Date.now() - loadStart;
-                    if (progressReady && !videoStarted) {
-                        if (elapsed < minLoadTime) {
-                            setTimeout(tryShowVideo, minLoadTime - elapsed);
-                        } else {
-                            tryShowVideo();
-                        }
-                    }
-                }
-
-                if (startBtn && progressBar && progressText && introVideo) {
-                    startBtn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        // حول الزر إلى شريط تحميل
-                        progressBar.style.display = 'block';
-                        progressText.textContent = 'جار التحميل...';
-                        progressText.style.color = '#333';
-                        startBtn.style.color = '#333';
-                        startBtn.style.background = '#fff';
-                        startBtn.style.boxShadow = '0 4px 24px #4CAF50b0, 0 2px 8px #0002';
-
-                        // حضّر الفيديو للتحميل
-                        introVideo.style.display = 'none';
-                        introVideo.preload = 'auto';
-                        introVideo.muted = true;
-                        introVideo.autoplay = false;
-                        introVideo.src = introVideo.src.split('?')[0] + '?t=' + Date.now();
-
-                        canPlay = false;
-                        progressReady = false;
-                        videoStarted = false;
-                        loadStart = Date.now();
-
-                        // إضافة event listeners مرة واحدة فقط
-                        if (!eventListenersAdded) {
-                            introVideo.addEventListener('progress', updateLoader);
-                            introVideo.addEventListener('loadedmetadata', updateLoader);
-                            introVideo.addEventListener('canplaythrough', onVideoReady);
-                            eventListenersAdded = true;
-                        }
-
-                        introVideo.load();
-
-                        // في حال حصل خطأ في التحميل
-                        introVideo.addEventListener('error', function (e) {
-                            console.error('خطأ في الفيديو:', e);
-                            console.error('تفاصيل الخطأ:', introVideo.error);
-
-                            // إعادة تعيين الزر
-                            progressBar.style.width = '0%';
-                            progressText.textContent = 'ابدأ';
-                            progressText.style.color = 'white';
-                            startBtn.style.color = 'white';
-                            startBtn.style.background = 'rgba(4, 4, 4, 0.554)';
-                            startBtn.style.boxShadow = '0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665)';
-
-                            alert('تعذر تحميل الفيديو. تأكد من وجود الملف أو جرب تحديث الصفحة.\n\nإذا استمرت المشكلة، قد يكون الفيديو غير متوافق مع هذا الجهاز.');
-                        });
-                    });
-                }
-
-                // عند الضغط على الفيديو
-                if (introVideo) {
-                    introVideo.addEventListener('click', function () {
-                        introVideo.style.display = 'none';
-                        if (videoOverlay) videoOverlay.style.display = 'none';
-                    });
-                }
-
-                // تحسين الموسيقى
-                let minecraftMusic = null;
-                let minecraftMusicTried = false;
-
-                function tryPlayMinecraftMusic() {
-                    if (!minecraftMusicTried) {
-                        minecraftMusicTried = true;
-                        if (!minecraftMusic) {
-                            minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
-                            minecraftMusic.volume = 0.7;
-                        }
-                        minecraftMusic.currentTime = 0;
-                        minecraftMusic.play().catch(function (err) {
-                            document.body.addEventListener('click', playMinecraftOnUser, { once: true });
-                            document.body.addEventListener('touchstart', playMinecraftOnUser, { once: true });
-                        });
-                    }
-                }
-
-                function playMinecraftOnUser() {
-                    if (minecraftMusic) {
-                        minecraftMusic.currentTime = 0;
-                        minecraftMusic.play();
-                    }
-                }
-
-                if (introVideo) {
-                    introVideo.addEventListener('ended', function () {
-                        tryPlayMinecraftMusic();
-                        fadeBlur.classList.add('active');
-                        setTimeout(function () {
-                            videoOverlay.style.display = 'none';
-                        }, 1000);
-                    });
-                }
-
-                if (enableSoundBtn) {
-                    enableSoundBtn.addEventListener('click', () => {
-                        introVideo.muted = false;
-                        introVideo.volume = 1.0;
-                        enableSoundBtn.style.display = 'none';
-                        introVideo.play();
+                var splash = document.getElementById('splashScreen');
+                var startBtn = document.getElementById('startGameBtn');
+                if (splash && startBtn) {
+                    startBtn.addEventListener('click', function () {
+                        splash.style.display = 'none';
                     });
                 }
             });
+            // تم حذف كود الفيديو والتحميل والأداء، يبدأ الموقع مباشرة باللعبة
         </script>
     </div>
 </body>
