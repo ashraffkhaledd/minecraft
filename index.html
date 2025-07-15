@@ -784,7 +784,7 @@
         </div>
 
         <video class="intro-video" id="introVideo" src="video/v/encode.mp4" playsinline webkit-playsinline muted
-            autoplay preload="auto"
+            preload="metadata"
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none;">
         </video>
         <button id="enableSoundBtn"
@@ -1221,9 +1221,19 @@
                         introVideo.load();
 
                         // في حال حصل خطأ في التحميل
-                        introVideo.addEventListener('error', function () {
-                            startBtn.style.display = 'none';
-                            alert('تعذر تحميل الفيديو. تأكد من وجود الملف أو جرب تحديث الصفحة.');
+                        introVideo.addEventListener('error', function (e) {
+                            console.error('خطأ في الفيديو:', e);
+                            console.error('تفاصيل الخطأ:', introVideo.error);
+
+                            // إعادة تعيين الزر
+                            progressBar.style.width = '0%';
+                            progressText.textContent = 'ابدأ';
+                            progressText.style.color = 'white';
+                            startBtn.style.color = 'white';
+                            startBtn.style.background = 'rgba(4, 4, 4, 0.554)';
+                            startBtn.style.boxShadow = '0 4px 15px rgba(255, 1, 1, 0.878), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(149, 63, 63, 0.887), 0 0 40px rgba(126, 33, 33, 0.665)';
+
+                            alert('تعذر تحميل الفيديو. تأكد من وجود الملف أو جرب تحديث الصفحة.\n\nإذا استمرت المشكلة، قد يكون الفيديو غير متوافق مع هذا الجهاز.');
                         });
                     });
                 }
