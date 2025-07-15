@@ -802,36 +802,60 @@
         </div>
 
         <script>
-            // تحميل الصور عند الحاجة بدلاً من التحميل المسبق الكامل
-            const imageCache = new Map();
-
-            function preloadImage(src) {
-                if (!imageCache.has(src)) {
-                    const img = new Image();
-                    img.src = src;
-                    imageCache.set(src, img);
-                }
-                return imageCache.get(src);
-            }
-
-            // تحميل الصور المهمة فقط
-            const criticalImages = [
-                'img/fc.jpg',
-                'img/نهائي 2.jpg',
-                'img/sheep.png',
-                'img/bee.png',
-                'img/chick_final-removebg-preview.png',
+            // تحميل كل صور وأصوات الهدايا مسبقاً
+            const giftImagePaths = [
+                'img/cherry-removebg-preview.png',
+                'treats/images-removebg-preview (1).png',
+                'treats/images-removebg-preview.png',
+                'treats/img-removebg-preview.png',
+                'treats/istockphoto-2155253329-612x612-removebg-preview.png',
+                'img/coin.png',
+                'img2/error 3 copy عربي.jpg',
+                'img2/error 3 copy عربي 2.jpg',
+                'img2/error 3 copyعربي 3.jpg',
+            ];
+            // صور الهدايا في أماكنها أيضاً
+            const giftSpritePaths = [
                 'img/doncky.png',
                 'img/dog.png',
                 'img/gift-removebg-preview.png',
                 'img/cherry-removebg-preview.png',
-                'img/blackgift.png'
+                'img/sheep.png',
+                'img/bee.png',
+                'img/chick_final-removebg-preview.png',
+                'img/blackgift.png',
             ];
+            // دمج كل الصور
+            const allGiftImages = [...giftImagePaths, ...giftSpritePaths];
+            function preloadImages(paths) {
+                paths.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+            }
+            preloadImages(allGiftImages);
 
-            // تحميل الصور المهمة فقط
-            criticalImages.forEach(src => preloadImage(src));
+            // تحميل كل أصوات الهدايا مسبقاً
+            const giftAudioPaths = [
+                'audio/sheap.mp3',
+                'audio/bee audio.mp3',
+                'audio/chicken.mp3',
+                'audio/donkey.mp3',
+                'audio/dog.mp3',
+                'audio/model 1.mp3',
+                'audio/model2.mp3',
+                'audio/error-call-to-attention-129258.mp3',
+            ];
+            function preloadAudio(paths) {
+                paths.forEach(src => {
+                    const audio = new Audio();
+                    audio.src = src;
+                    audio.load();
+                });
+            }
+            preloadAudio(giftAudioPaths);
 
-            // تحسين تحميل الأصوات
+            // أصوات الهدايا (تظل كما هي)
             const sounds = {
                 gift1: new Audio('audio/sheap.mp3'),
                 gift2: new Audio('audio/bee audio.mp3'),
@@ -847,16 +871,59 @@
                 gift12: new Audio('audio/error-call-to-attention-129258.mp3'),
                 gift13: new Audio('audio/error-call-to-attention-129258.mp3'),
             };
-
-            // تحميل الأصوات عند الحاجة فقط
             Object.values(sounds).forEach(audio => {
+                audio.load();
                 audio.volume = 0.7;
             });
-
-            // Set higher volume for gifts 8, 12, and 13
             sounds.gift8.volume = 1.0;
             sounds.gift12.volume = 1.0;
             sounds.gift13.volume = 1.0;
+
+            // موسيقى الخلفية الأصلية
+            const minecraftMusic = new Audio('audio/Minecraft - Full [Classic] Soundtrack-yt.savetube.me.mp3');
+            minecraftMusic.loop = true;
+            minecraftMusic.volume = 0.7;
+
+            // عند الضغط على زر ابدأ: شغل الموسيقى وأخفي شاشة البداية
+            document.addEventListener('DOMContentLoaded', function () {
+                var splash = document.getElementById('splashScreen');
+                var startBtn = document.getElementById('startGameBtn');
+                if (splash && startBtn) {
+                    startBtn.addEventListener('click', function () {
+                        splash.style.display = 'none';
+                        // شغل موسيقى الخلفية
+                        minecraftMusic.currentTime = 0;
+                        minecraftMusic.play();
+                    });
+                }
+            });
+
+            // تحسين تحميل الأصوات
+            // const sounds = {
+            //     gift1: new Audio('audio/sheap.mp3'),
+            //     gift2: new Audio('audio/bee audio.mp3'),
+            //     gift3: new Audio('audio/chicken.mp3'),
+            //     gift4: new Audio('audio/donkey.mp3'),
+            //     gift5: new Audio('audio/dog.mp3'),
+            //     gift6: new Audio('audio/model 1.mp3'),
+            //     gift7: new Audio('audio/model2.mp3'),
+            //     gift8: new Audio('audio/error-call-to-attention-129258.mp3'),
+            //     gift9: new Audio('audio/sheap.mp3'),
+            //     gift10: new Audio('audio/bee audio.mp3'),
+            //     gift11: new Audio('audio/chicken.mp3'),
+            //     gift12: new Audio('audio/error-call-to-attention-129258.mp3'),
+            //     gift13: new Audio('audio/error-call-to-attention-129258.mp3'),
+            // };
+
+            // تحميل الأصوات عند الحاجة فقط
+            // Object.values(sounds).forEach(audio => {
+            //     audio.volume = 0.7;
+            // });
+
+            // Set higher volume for gifts 8, 12, and 13
+            // sounds.gift8.volume = 1.0;
+            // sounds.gift12.volume = 1.0;
+            // sounds.gift13.volume = 1.0;
 
             // Popup images for gifts
             const images = {
@@ -1104,16 +1171,6 @@
                 initializeGame();
             }
 
-            // إخفاء شاشة البداية عند الضغط على زر ابدأ
-            document.addEventListener('DOMContentLoaded', function () {
-                var splash = document.getElementById('splashScreen');
-                var startBtn = document.getElementById('startGameBtn');
-                if (splash && startBtn) {
-                    startBtn.addEventListener('click', function () {
-                        splash.style.display = 'none';
-                    });
-                }
-            });
             // تم حذف كود الفيديو والتحميل والأداء، يبدأ الموقع مباشرة باللعبة
         </script>
     </div>
